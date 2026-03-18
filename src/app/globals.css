@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+@import 'tailwindcss';
+
+/* ─── Design Tokens ──────────────────────────────────────────── */
+:root {
+  --black:    #000000;
+  --white:    #ffffff;
+  --red:      #FF3B30;
+  --red-dark: #CC2E25;
+  --gray-50:  #f9f9f9;
+  --gray-100: #f0f0f0;
+  --gray-200: #e0e0e0;
+  --gray-400: #9a9a9a;
+  --gray-600: #5a5a5a;
+  --gray-800: #1a1a1a;
+  --gray-900: #0d0d0d;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+}
+
+/* ─── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--black);
+  color: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Typography ──────────────────────────────────────────────── */
+.font-bebas   { font-family: 'Bebas Neue', 'Outfit', sans-serif; letter-spacing: 0.02em; }
+.font-outfit  { font-family: 'Outfit', sans-serif; }
+
+h1, h2, h3 { font-family: 'Outfit', sans-serif; font-weight: 900; }
+
+/* ─── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar          { width: 4px; height: 4px; }
+::-webkit-scrollbar-track    { background: #111; }
+::-webkit-scrollbar-thumb    { background: #333; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* ─── Utilities ───────────────────────────────────────────────── */
+
+/* Section label — small all-caps tag above heading */
+.label {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+/* Divider */
+.divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); }
+
+/* Text gradient (kept for any legacy usage) */
+.text-gradient {
+  background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* glass — kept minimal for backwards compat */
+.glass {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ─── Swiper ──────────────────────────────────────────────────── */
+.swiper-pagination-bullet {
+  background: rgba(255,255,255,0.25) !important;
+  width: 6px !important;
+  height: 6px !important;
+  opacity: 1 !important;
+}
+.swiper-pagination-bullet-active {
+  background: var(--white) !important;
+  width: 22px !important;
+  border-radius: 3px !important;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--black) !important;
+  background: var(--white) !important;
+  border-radius: 50% !important;
+  width: 40px !important;
+  height: 40px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 12px !important;
+  font-weight: 800;
+}
+
+/* ─── Range input ─────────────────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--white) 0%, var(--white) var(--value, 50%), #333 var(--value, 50%));
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--white);
+  margin-top: -5.5px;
+  cursor: pointer;
+  box-shadow: 0 0 0 2px #000, 0 0 0 3px #fff;
+}
+
+/* ─── Selection ───────────────────────────────────────────────── */
+::selection { background: var(--red); color: #fff; }
