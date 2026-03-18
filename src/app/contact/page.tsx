@@ -9,8 +9,6 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const f = (k: string, v: string) => setForm((prev) => ({ ...prev, [k]: v }));
 
-  const inputClass = "w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-600 focus:outline-none focus:border-amber-400/50 transition-all text-sm";
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
@@ -23,69 +21,83 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-20">
-      {/* Header */}
-      <section className="py-16 text-center bg-[#0a0a12] border-b border-white/5">
-        <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">Get in Touch</span>
-        <h1 className="text-4xl font-black text-white font-outfit mt-2 mb-3">Contact Us</h1>
-        <p className="text-slate-400 max-w-md mx-auto">We&apos;d love to hear from you. Send us a message and we&apos;ll respond within 24 hours.</p>
+    <div className="page-shell pt-[68px]">
+      <section className="border-b border-white/8 bg-[#090909] py-16 text-center">
+        <div className="container-shell">
+          <p className="label mb-2">Get In Touch</p>
+          <h1 className="section-title text-[clamp(2.5rem,6vw,4rem)]">Contact Us</h1>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-white/50 lg:text-base">
+            Have a question or need support? Send a message and our team will get back within 24 hours.
+          </p>
+        </div>
       </section>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-          {/* Info */}
-          <div className="lg:col-span-2 space-y-6">
-            <h2 className="text-xl font-bold text-white font-outfit">Contact Information</h2>
+      <div className="container-shell py-14 lg:py-16">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:gap-12">
+          <div className="space-y-5 lg:col-span-2">
+            <h2 className="section-title text-3xl">Contact Information</h2>
             {info.map(({ icon: Icon, label, val }) => (
-              <div key={label} className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center shrink-0">
-                  <Icon className="w-5 h-5 text-amber-400" />
+              <div key={label} className="panel flex items-start gap-3 p-4">
+                <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#FF3B30]/30 bg-[#FF3B30]/10">
+                  <Icon className="h-5 w-5 text-[#FF3B30]" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">{label}</p>
-                  <p className="text-sm text-white mt-0.5">{val}</p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.14em] text-white/35">{label}</p>
+                  <p className="mt-1 text-sm text-white/80">{val}</p>
                 </div>
               </div>
             ))}
-            <div className="p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 to-orange-500/5 border border-amber-500/20 mt-6">
-              <p className="text-sm font-semibold text-white mb-1">Support Hours</p>
-              <p className="text-xs text-slate-400">Mon – Fri: 9am – 6pm EST</p>
-              <p className="text-xs text-slate-400">Sat – Sun: 10am – 4pm EST</p>
+
+            <div className="panel border-[#FF3B30]/25 bg-[#FF3B30]/8 p-5">
+              <p className="text-sm font-bold text-white">Support Hours</p>
+              <p className="mt-1 text-xs text-white/55">Mon to Fri: 9am to 6pm EST</p>
+              <p className="text-xs text-white/55">Sat to Sun: 10am to 4pm EST</p>
             </div>
           </div>
 
-          {/* Form */}
           <div className="lg:col-span-3">
             {submitted ? (
-              <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center justify-center h-full text-center py-16">
-                <div className="w-16 h-16 rounded-full bg-emerald-500 flex items-center justify-center mb-4 shadow-2xl shadow-emerald-500/30">
-                  <Check className="w-8 h-8 text-white" />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="panel flex min-h-[340px] flex-col items-center justify-center px-6 text-center"
+              >
+                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white">
+                  <Check className="h-7 w-7" />
                 </div>
-                <h3 className="text-xl font-bold text-white font-outfit mb-2">Message sent!</h3>
-                <p className="text-slate-400 text-sm">Thanks for reaching out. We&apos;ll reply within 24 hours.</p>
+                <h3 className="section-title text-3xl">Message Sent</h3>
+                <p className="mt-3 text-sm text-white/55">Thanks for reaching out. We will reply as soon as possible.</p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit} className="panel space-y-4 p-5 sm:p-6">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1.5">Name</label>
-                    <input required value={form.name} onChange={(e) => f('name', e.target.value)} placeholder="Your name" className={inputClass} />
+                    <label className="mb-1.5 block text-xs font-medium text-white/45">Name</label>
+                    <input required value={form.name} onChange={(e) => f('name', e.target.value)} placeholder="Your name" className="input-field" />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1.5">Email</label>
-                    <input required type="email" value={form.email} onChange={(e) => f('email', e.target.value)} placeholder="you@example.com" className={inputClass} />
+                    <label className="mb-1.5 block text-xs font-medium text-white/45">Email</label>
+                    <input required type="email" value={form.email} onChange={(e) => f('email', e.target.value)} placeholder="you@example.com" className="input-field" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1.5">Subject</label>
-                  <input required value={form.subject} onChange={(e) => f('subject', e.target.value)} placeholder="How can we help?" className={inputClass} />
+                  <label className="mb-1.5 block text-xs font-medium text-white/45">Subject</label>
+                  <input required value={form.subject} onChange={(e) => f('subject', e.target.value)} placeholder="How can we help?" className="input-field" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1.5">Message</label>
-                  <textarea required value={form.message} onChange={(e) => f('message', e.target.value)} placeholder="Tell us more…" rows={6} className={`${inputClass} resize-none`} />
+                  <label className="mb-1.5 block text-xs font-medium text-white/45">Message</label>
+                  <textarea
+                    required
+                    value={form.message}
+                    onChange={(e) => f('message', e.target.value)}
+                    placeholder="Tell us more..."
+                    rows={6}
+                    className="w-full rounded-3xl border border-white/14 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/34 focus:border-white/35 focus:outline-none"
+                  />
                 </div>
-                <button type="submit" className="flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 text-black font-bold text-sm hover:opacity-90 transition-all shadow-lg shadow-amber-500/20">
-                  <Send className="w-4 h-4" />Send Message
+                <button type="submit" className="btn-primary px-8 py-3.5">
+                  <Send className="h-4 w-4" />
+                  Send Message
                 </button>
               </form>
             )}

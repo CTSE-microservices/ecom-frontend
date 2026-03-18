@@ -54,25 +54,25 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label className="block text-xs font-medium text-slate-400 mb-1.5">Email</label>
+        <label className="mb-1.5 block text-xs font-medium text-white/45">Email</label>
         <input
           {...register('email')}
           type="email"
           placeholder="you@example.com"
-          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-600 focus:outline-none focus:border-amber-400/50 focus:bg-white/8 transition-all text-sm"
+          className="input-field rounded-2xl"
         />
         {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email.message}</p>}
       </div>
       <div>
-        <label className="block text-xs font-medium text-slate-400 mb-1.5">Password</label>
+        <label className="mb-1.5 block text-xs font-medium text-white/45">Password</label>
         <div className="relative">
           <input
             {...register('password')}
             type={showPass ? 'text' : 'password'}
             placeholder="••••••••"
-            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-600 focus:outline-none focus:border-amber-400/50 transition-all text-sm pr-10"
+            className="input-field rounded-2xl pr-10"
           />
-          <button type="button" onClick={() => setShowPass(s => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+          <button type="button" onClick={() => setShowPass(s => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70">
             {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
           </button>
         </div>
@@ -82,7 +82,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-black font-bold text-sm hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20"
+        className="btn-primary w-full justify-center rounded-2xl py-3.5 text-xs disabled:opacity-70"
       >
         {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
         Sign In
@@ -112,32 +112,32 @@ function SignupForm({ onSuccess }: { onSuccess: () => void }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label className="block text-xs font-medium text-slate-400 mb-1.5">Full Name</label>
-        <input {...register('name')} placeholder="John Doe" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-600 focus:outline-none focus:border-amber-400/50 transition-all text-sm" />
+        <label className="mb-1.5 block text-xs font-medium text-white/45">Full Name</label>
+        <input {...register('name')} placeholder="John Doe" className="input-field rounded-2xl" />
         {errors.name && <p className="text-xs text-red-400 mt-1">{errors.name.message}</p>}
       </div>
       <div>
-        <label className="block text-xs font-medium text-slate-400 mb-1.5">Email</label>
-        <input {...register('email')} type="email" placeholder="you@example.com" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-600 focus:outline-none focus:border-amber-400/50 transition-all text-sm" />
+        <label className="mb-1.5 block text-xs font-medium text-white/45">Email</label>
+        <input {...register('email')} type="email" placeholder="you@example.com" className="input-field rounded-2xl" />
         {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email.message}</p>}
       </div>
       <div>
-        <label className="block text-xs font-medium text-slate-400 mb-1.5">Password</label>
+        <label className="mb-1.5 block text-xs font-medium text-white/45">Password</label>
         <div className="relative">
-          <input {...register('password')} type={showPass ? 'text' : 'password'} placeholder="••••••••" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-600 focus:outline-none focus:border-amber-400/50 transition-all text-sm pr-10" />
-          <button type="button" onClick={() => setShowPass(s => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+          <input {...register('password')} type={showPass ? 'text' : 'password'} placeholder="••••••••" className="input-field rounded-2xl pr-10" />
+          <button type="button" onClick={() => setShowPass(s => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70">
             {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
           </button>
         </div>
         {errors.password && <p className="text-xs text-red-400 mt-1">{errors.password.message}</p>}
       </div>
       <div>
-        <label className="block text-xs font-medium text-slate-400 mb-1.5">Confirm Password</label>
-        <input {...register('confirmPassword')} type={showPass ? 'text' : 'password'} placeholder="••••••••" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-600 focus:outline-none focus:border-amber-400/50 transition-all text-sm" />
+        <label className="mb-1.5 block text-xs font-medium text-white/45">Confirm Password</label>
+        <input {...register('confirmPassword')} type={showPass ? 'text' : 'password'} placeholder="••••••••" className="input-field rounded-2xl" />
         {errors.confirmPassword && <p className="text-xs text-red-400 mt-1">{errors.confirmPassword.message}</p>}
       </div>
       {error && <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2">{error}</p>}
-      <button type="submit" disabled={isSubmitting} className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-black font-bold text-sm hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
+      <button type="submit" disabled={isSubmitting} className="btn-primary w-full justify-center rounded-2xl py-3.5 text-xs disabled:opacity-70">
         {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
         Create Account
       </button>
@@ -174,32 +174,32 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', onSuc
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="fixed inset-0 z-[61] flex items-center justify-center p-4"
           >
-            <div className="w-full max-w-md bg-[#0f0f1a] border border-white/10 rounded-3xl shadow-2xl overflow-hidden">
+            <div className="w-full max-w-md overflow-hidden rounded-3xl border border-white/12 bg-[#0e0e0f] shadow-2xl">
               {/* Header */}
               <div className="flex items-center justify-between p-6 pb-0">
                 <div>
-                  <h2 className="text-xl font-bold text-white font-outfit">
+                  <h2 className="section-title text-3xl text-white">
                     {tab === 'login' ? 'Welcome back' : 'Create account'}
                   </h2>
-                  <p className="text-sm text-slate-500 mt-0.5">
+                  <p className="mt-1 text-sm text-white/45">
                     {tab === 'login' ? 'Sign in to your account' : 'Join LuxeStore today'}
                   </p>
                 </div>
-                <button onClick={onClose} className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors">
+                <button onClick={onClose} className="rounded-full p-2 text-white/45 transition-colors hover:bg-white/8 hover:text-white">
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Tabs */}
-              <div className="flex mx-6 mt-6 p-1 bg-white/5 rounded-xl">
+              <div className="mx-6 mt-6 flex rounded-full border border-white/10 bg-white/5 p-1">
                 {(['login', 'signup'] as const).map((t) => (
                   <button
                     key={t}
                     onClick={() => setTab(t)}
-                    className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
+                    className={`flex-1 rounded-full py-2.5 text-xs font-black uppercase tracking-[0.12em] transition-all ${
                       tab === t
-                        ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-black shadow-lg'
-                        : 'text-slate-400 hover:text-white'
+                        ? 'bg-[#FF3B30] text-white'
+                        : 'text-white/45 hover:text-white'
                     }`}
                   >
                     {t === 'login' ? 'Sign In' : 'Sign Up'}
@@ -225,14 +225,14 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', onSuc
                   </motion.div>
                 </AnimatePresence>
 
-                <p className="text-center text-xs text-slate-500 mt-4">
+                <p className="mt-4 text-center text-xs text-white/40">
                   {tab === 'login' ? (
                     <>Don&apos;t have an account?{' '}
-                      <button onClick={() => setTab('signup')} className="text-amber-400 hover:text-amber-300 font-medium">Sign up</button>
+                      <button onClick={() => setTab('signup')} className="font-medium text-[#FF3B30] hover:text-[#ff796f]">Sign up</button>
                     </>
                   ) : (
                     <>Already have an account?{' '}
-                      <button onClick={() => setTab('login')} className="text-amber-400 hover:text-amber-300 font-medium">Sign in</button>
+                      <button onClick={() => setTab('login')} className="font-medium text-[#FF3B30] hover:text-[#ff796f]">Sign in</button>
                     </>
                   )}
                 </p>

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Menu, X, ChevronDown, Search, User, LogOut } from 'lucide-react';
+import { ShoppingBag, Menu, X, ChevronDown, Search, LogOut } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import AuthModal from '@/components/auth/AuthModal';
@@ -42,12 +42,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    setMobileOpen(false);
-    setUserMenuOpen(false);
-    setCollectionsOpen(false);
-  }, [pathname]);
-
   const openLogin = () => { setAuthTab('login'); setAuthModalOpen(true); };
   const openSignup = () => { setAuthTab('signup'); setAuthModalOpen(true); };
 
@@ -56,8 +50,8 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-black border-b border-white/10 shadow-2xl'
-            : 'bg-black/95 backdrop-blur-xl border-b border-white/5'
+            ? 'bg-black/96 border-b border-white/12 shadow-2xl shadow-black/40'
+            : 'bg-black/80 backdrop-blur-xl border-b border-white/8'
         }`}
       >
         <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
@@ -81,7 +75,7 @@ export default function Navbar() {
                     onMouseLeave={() => setCollectionsOpen(false)}
                   >
                     <button
-                      className={`flex items-center gap-1 px-4 py-2 text-[13px] font-semibold tracking-wide transition-colors duration-150 uppercase ${
+                      className={`flex items-center gap-1 rounded-full px-4 py-2 text-[12px] font-bold tracking-[0.1em] transition-colors duration-150 uppercase ${
                         collectionsOpen ? 'text-[#FF3B30]' : 'text-white/70 hover:text-white'
                       }`}
                     >
@@ -95,13 +89,13 @@ export default function Navbar() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 8 }}
                           transition={{ duration: 0.18 }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-52 bg-white rounded-xl overflow-hidden shadow-2xl shadow-black/50 border border-gray-100"
+                          className="absolute top-full left-1/2 mt-2 w-56 -translate-x-1/2 overflow-hidden rounded-2xl border border-white/20 bg-[#111] shadow-2xl shadow-black/50"
                         >
                           {link.children.map((child) => (
                             <Link
                               key={child.href}
                               href={child.href}
-                              className="block px-5 py-3 text-[13px] font-semibold text-black hover:bg-gray-50 hover:text-[#FF3B30] transition-colors uppercase tracking-wide border-b border-gray-100 last:border-0"
+                              className="block border-b border-white/8 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.12em] text-white/72 transition-colors hover:bg-white/6 hover:text-white last:border-0"
                             >
                               {child.label}
                             </Link>
@@ -114,7 +108,7 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href!}
-                    className={`px-4 py-2 text-[13px] font-semibold uppercase tracking-wide transition-colors duration-150 ${
+                    className={`rounded-full px-4 py-2 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors duration-150 ${
                       pathname === link.href ? 'text-white' : 'text-white/60 hover:text-white'
                     }`}
                   >
@@ -132,7 +126,7 @@ export default function Navbar() {
               {/* Search */}
               <Link
                 href="/products"
-                className="p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/8 transition-all"
+                className="rounded-full p-2.5 text-white/60 transition-all hover:bg-white/8 hover:text-white"
                 aria-label="Search"
               >
                 <Search className="w-[18px] h-[18px]" />
@@ -141,7 +135,7 @@ export default function Navbar() {
               {/* Cart */}
               <Link
                 href="/cart"
-                className="relative p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/8 transition-all"
+                className="relative rounded-full p-2.5 text-white/60 transition-all hover:bg-white/8 hover:text-white"
                 aria-label="Cart"
               >
                 <ShoppingBag className="w-[18px] h-[18px]" />
@@ -165,7 +159,7 @@ export default function Navbar() {
                 <div className="relative hidden lg:block">
                   <button
                     onClick={() => setUserMenuOpen((o) => !o)}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/8 transition-colors"
+                    className="flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors hover:bg-white/8"
                   >
                     <div className="w-7 h-7 rounded-full bg-[#FF3B30] flex items-center justify-center text-white text-xs font-black font-bebas tracking-wide">
                       {user.name.charAt(0)}
@@ -179,15 +173,15 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 8 }}
                         transition={{ duration: 0.16 }}
-                        className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl py-1 shadow-2xl border border-gray-100"
+                        className="absolute right-0 top-full mt-2 w-48 rounded-2xl border border-white/20 bg-[#111] py-1 shadow-2xl"
                       >
-                        <div className="px-4 py-3 border-b border-gray-100">
-                          <p className="text-xs font-bold text-black truncate">{user.name}</p>
-                          <p className="text-[11px] text-gray-400 truncate">{user.email}</p>
+                        <div className="border-b border-white/10 px-4 py-3">
+                          <p className="truncate text-xs font-bold text-white">{user.name}</p>
+                          <p className="truncate text-[11px] text-white/45">{user.email}</p>
                         </div>
                         <button
                           onClick={() => { logout(); setUserMenuOpen(false); }}
-                          className="flex items-center gap-2 w-full px-4 py-2.5 text-sm font-medium text-black hover:bg-gray-50 hover:text-[#FF3B30] transition-colors"
+                          className="flex w-full items-center gap-2 px-4 py-2.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/8 hover:text-white"
                         >
                           <LogOut className="w-4 h-4" />
                           Sign Out
@@ -200,13 +194,13 @@ export default function Navbar() {
                 <div className="hidden lg:flex items-center gap-2 ml-2">
                   <button
                     onClick={openLogin}
-                    className="px-4 py-2 text-[13px] font-semibold text-white/60 hover:text-white uppercase tracking-wide transition-colors"
+                    className="rounded-full px-4 py-2 text-[12px] font-bold uppercase tracking-[0.1em] text-white/60 transition-colors hover:text-white"
                   >
                     Login
                   </button>
                   <button
                     onClick={openSignup}
-                    className="px-5 py-2 rounded-full bg-white text-black text-[13px] font-black uppercase tracking-wide hover:bg-[#FF3B30] hover:text-white transition-all duration-200"
+                    className="btn-primary"
                   >
                     Sign Up
                   </button>
@@ -216,7 +210,7 @@ export default function Navbar() {
               {/* Mobile Toggle */}
               <button
                 onClick={() => setMobileOpen((o) => !o)}
-                className="lg:hidden p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/8 transition-all ml-1"
+                className="ml-1 rounded-full p-2 text-white/70 transition-all hover:bg-white/8 hover:text-white lg:hidden"
                 aria-label="Menu"
               >
                 {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -312,7 +306,7 @@ export default function Navbar() {
                     <button onClick={openLogin} className="w-full py-3 rounded-full border border-white/20 text-sm font-black uppercase tracking-wide text-white hover:bg-white hover:text-black transition-all duration-200">
                       Login
                     </button>
-                    <button onClick={openSignup} className="w-full py-3 rounded-full bg-[#FF3B30] text-white text-sm font-black uppercase tracking-wide hover:bg-[#CC2E25] transition-all duration-200">
+                    <button onClick={openSignup} className="btn-primary w-full">
                       Sign Up
                     </button>
                   </>

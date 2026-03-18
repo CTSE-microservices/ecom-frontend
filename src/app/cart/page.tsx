@@ -18,7 +18,7 @@ export default function CartPage() {
   /* ── Empty state ── */
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-black pt-[68px] flex flex-col items-center justify-center text-center px-6">
+      <div className="page-shell flex min-h-screen flex-col items-center justify-center px-6 pt-[68px] text-center">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="max-w-sm">
           <div className="w-24 h-24 rounded-full border border-white/10 flex items-center justify-center mx-auto mb-8">
             <ShoppingCart className="w-10 h-10 text-white/20" />
@@ -27,7 +27,7 @@ export default function CartPage() {
           <p className="text-white/35 text-sm mb-10 font-medium">Looks like you haven&apos;t added anything yet.</p>
           <Link
             href="/products"
-            className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-[#FF3B30] text-white text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-200"
+            className="btn-primary px-10 py-4"
           >
             <ShoppingBag className="w-4 h-4" />
             Start Shopping
@@ -38,8 +38,8 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black pt-[68px] pb-20">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+    <div className="page-shell pb-20 pt-[68px]">
+      <div className="container-shell">
 
         {/* ─── Page header ──────────────────── */}
         <div className="border-b border-white/8 py-10">
@@ -76,7 +76,7 @@ export default function CartPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: -30, height: 0, marginBottom: 0 }}
                   transition={{ delay: i * 0.04 }}
-                  className="flex gap-5 p-5 rounded-2xl border border-white/8 hover:border-white/15 transition-colors bg-white/2"
+                  className="panel flex gap-5 p-5 transition-colors hover:border-white/18"
                 >
                   {/* Image */}
                   <Link href={`/products/${item.product.id}`} className="shrink-0">
@@ -91,7 +91,7 @@ export default function CartPage() {
                       <div>
                         <p className="text-[10px] font-black text-[#FF3B30] uppercase tracking-widest mb-1">{item.product.category}</p>
                         <Link href={`/products/${item.product.id}`}>
-                          <h3 className="text-sm font-black text-white hover:text-[#FF3B30] transition-colors uppercase tracking-wide truncate">
+                          <h3 className="truncate text-sm font-black uppercase tracking-wide text-white transition-colors hover:text-[#FF3B30]">
                             {item.product.name}
                           </h3>
                         </Link>
@@ -139,7 +139,7 @@ export default function CartPage() {
 
           {/* Order summary */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
-            <div className="sticky top-24 rounded-2xl border border-white/10 overflow-hidden">
+            <div className="panel sticky top-24 overflow-hidden rounded-2xl">
               {/* Header */}
               <div className="px-6 py-5 border-b border-white/8">
                 <h2 className="font-bebas text-2xl text-white tracking-wider">ORDER SUMMARY</h2>
@@ -184,7 +184,7 @@ export default function CartPage() {
               <div className="px-6 pb-6 space-y-3">
                 <Link
                   href="/checkout"
-                  className="flex items-center justify-center gap-2.5 w-full py-4 rounded-full bg-[#FF3B30] text-white font-black text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-200 group"
+                  className="btn-primary group flex w-full justify-center py-4"
                 >
                   Proceed to Checkout
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

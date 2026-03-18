@@ -15,70 +15,73 @@ const values = [
   { icon: Award, title: 'Quality First', desc: 'Every product is hand-picked and tested to meet our uncompromising standards.' },
   { icon: Heart, title: 'Customer Love', desc: 'We obsess over the customer experience so you love every interaction.' },
   { icon: Globe, title: 'Sustainability', desc: 'We partner with eco-conscious suppliers and aim for carbon-neutral operations.' },
-  { icon: Users, title: 'Community', desc: 'We\'re building a global community of people who value design and quality.' },
+  { icon: Users, title: 'Community', desc: 'We are building a global community of people who value design and quality.' },
 ];
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen pt-20">
-      {/* Hero */}
-      <section className="relative h-[50vh] min-h-[340px] flex items-center">
+    <div className="page-shell pt-[68px]">
+      <section className="relative min-h-[380px] overflow-hidden border-b border-white/8">
         <div className="absolute inset-0">
           <Image src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80" alt="About us" fill className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-[#080810]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/70 to-black" />
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full">
-          <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">Our Story</span>
-          <h1 className="text-4xl sm:text-6xl font-black text-white font-outfit mt-2 mb-4">About LuxeStore</h1>
-          <p className="text-slate-300 max-w-xl mx-auto text-lg">Curating the world&apos;s finest products for the discerning lifestyle since 2020.</p>
-        </div>
-      </section>
-
-      {/* Story */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-        <p className="text-xl text-slate-300 leading-relaxed mb-6">
-          LuxeStore was born from a simple belief: <span className="text-amber-400 font-semibold">premium quality should be accessible</span>. We partner directly with top brands and artisans worldwide to bring you products that last, delight, and inspire.
-        </p>
-        <p className="text-slate-500 leading-relaxed">
-          Founded in 2020, we started as a tiny team with a big dream. Today we serve over 50,000 customers in 30+ countries, with a curated catalog of 500+ products across electronics, clothing, home, beauty, and sports.
-        </p>
-      </section>
-
-      {/* Values */}
-      <section className="bg-[#0a0a12] py-20 border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">What Drives Us</span>
-            <h2 className="text-3xl font-black text-white font-outfit mt-2">Our Values</h2>
+        <div className="container-shell relative z-10 flex min-h-[380px] items-end pb-12">
+          <div className="max-w-2xl">
+            <p className="label mb-3">Our Story</p>
+            <h1 className="section-title text-[clamp(2.8rem,7vw,5.2rem)]">Design-First Commerce</h1>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-white/60">
+              LuxeStore curates premium essentials for people who care how products look, feel, and perform in real life.
+            </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        </div>
+      </section>
+
+      <section className="container-shell py-16 lg:py-20">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-lg leading-relaxed text-white/70 lg:text-xl">
+            LuxeStore was built on one principle: premium quality should feel accessible, not intimidating.
+            We work directly with trusted makers to bring products that are built to last and designed to elevate everyday life.
+          </p>
+          <p className="mt-6 text-sm leading-relaxed text-white/45 lg:text-base">
+            Since 2020, we have grown from a tiny studio team into a global brand serving 50,000+ customers across 30+ countries, while keeping our curation standards obsessively high.
+          </p>
+        </div>
+      </section>
+
+      <section className="border-y border-white/8 bg-[#090909] py-16 lg:py-20">
+        <div className="container-shell">
+          <div className="mb-10 text-center lg:mb-12">
+            <p className="label mb-2">What Drives Us</p>
+            <h2 className="section-title text-4xl lg:text-5xl">Our Values</h2>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {values.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="p-6 rounded-2xl glass text-center hover:border-amber-400/20 transition-all border border-white/5">
-                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4">
-                  <Icon className="w-6 h-6 text-amber-400" />
+              <div key={title} className="panel p-6 text-center transition-colors hover:border-white/22">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-[#FF3B30]/30 bg-[#FF3B30]/10">
+                  <Icon className="h-5 w-5 text-[#FF3B30]" />
                 </div>
-                <h3 className="text-base font-bold text-white font-outfit mb-2">{title}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{desc}</p>
+                <h3 className="text-base font-bold text-white">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/45">{desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Team */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center mb-12">
-          <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">The People</span>
-          <h2 className="text-3xl font-black text-white font-outfit mt-2">Meet the Team</h2>
+      <section className="container-shell py-16 lg:py-20">
+        <div className="mb-10 text-center lg:mb-12">
+          <p className="label mb-2">The People</p>
+          <h2 className="section-title text-4xl lg:text-5xl">Meet The Team</h2>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
           {team.map((member) => (
             <div key={member.name} className="group text-center">
-              <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-3xl overflow-hidden mx-auto mb-4 border-2 border-white/10 group-hover:border-amber-400/40 transition-all">
-                <Image src={member.img} alt={member.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
+              <div className="relative mx-auto mb-4 h-36 w-36 overflow-hidden rounded-2xl border border-white/12 sm:h-40 sm:w-40">
+                <Image src={member.img} alt={member.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
               <h3 className="text-sm font-bold text-white">{member.name}</h3>
-              <p className="text-xs text-slate-500 mt-0.5">{member.role}</p>
+              <p className="mt-1 text-xs text-white/45">{member.role}</p>
             </div>
           ))}
         </div>

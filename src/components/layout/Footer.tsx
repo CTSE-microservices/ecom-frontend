@@ -32,22 +32,22 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="bg-black border-t border-white/10">
+    <footer className="border-t border-white/10 bg-black">
       {/* Editorial top strip */}
-      <div className="border-b border-white/10 py-12 px-6 lg:px-10">
-        <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="border-b border-white/10 px-6 py-14 lg:px-10">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-start justify-between gap-7 md:flex-row md:items-center">
           <div>
             <p className="label mb-2">Stay in the loop</p>
-            <h2 className="font-bebas text-4xl lg:text-5xl text-white tracking-wider">
+            <h2 className="section-title text-4xl lg:text-5xl">
               JOIN THE COMMUNITY
             </h2>
-            <p className="text-white/40 text-sm mt-1 max-w-md">
+            <p className="mt-2 max-w-md text-sm text-white/45">
               Get early access to drops, exclusive deals, and style tips.
             </p>
           </div>
           <Link
             href="/products"
-            className="flex items-center gap-3 px-8 py-4 rounded-full bg-[#FF3B30] text-white text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-200 whitespace-nowrap group"
+            className="btn-primary group"
           >
             Shop Now
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -56,8 +56,8 @@ export default function Footer() {
       </div>
 
       {/* Main footer grid */}
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-14">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+      <div className="mx-auto max-w-[1440px] px-6 py-14 lg:px-10">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
           {/* Brand col */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex items-center gap-0 mb-5 group">
@@ -65,7 +65,7 @@ export default function Footer() {
               <span className="w-px h-5 bg-white/30 mx-2" />
               <span className="font-bebas text-2xl tracking-widest text-[#FF3B30]">STORE</span>
             </Link>
-            <p className="text-white/40 text-sm leading-relaxed mb-6 max-w-[200px]">
+            <p className="mb-6 max-w-[220px] text-sm leading-relaxed text-white/40">
               Premium products for those who demand quality, design, and excellence.
             </p>
             <div className="flex items-center gap-3">
@@ -74,7 +74,7 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/50 hover:border-[#FF3B30] hover:text-[#FF3B30] transition-all duration-200"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/50 transition-all duration-200 hover:border-[#FF3B30] hover:text-[#FF3B30]"
                 >
                   <Icon className="w-3.5 h-3.5" />
                 </a>
@@ -91,7 +91,7 @@ export default function Footer() {
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      className="text-sm text-white/55 hover:text-white transition-colors duration-150 font-medium"
+                      className="text-sm font-medium text-white/55 transition-colors duration-150 hover:text-white"
                     >
                       {item.label}
                     </Link>
@@ -104,12 +104,12 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/8 px-6 lg:px-10 py-6">
-        <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="border-t border-white/8 px-6 py-6 lg:px-10">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-3 sm:flex-row">
           <p className="text-[12px] text-white/25 font-medium">© 2025 LuxeStore, Inc. All rights reserved.</p>
           <div className="flex items-center gap-6">
             {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((t) => (
-              <Link key={t} href="#" className="text-[12px] text-white/25 hover:text-white/60 transition-colors font-medium">
+              <Link key={t} href="#" className="text-[12px] font-medium text-white/25 transition-colors hover:text-white/60">
                 {t}
               </Link>
             ))}

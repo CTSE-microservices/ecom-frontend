@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams } from 'next/navigation';
-import { Search, SlidersHorizontal, X, ChevronDown, Star, ArrowRight } from 'lucide-react';
+import { Search, SlidersHorizontal, X, ChevronDown, Star } from 'lucide-react';
 import ProductCard from '@/components/products/ProductCard';
 import { products, categories } from '@/lib/data';
 
@@ -57,11 +57,11 @@ export default function ProductsContent() {
   const currentCat = categories.find((c) => c.id === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-black pt-[68px] pb-20">
+    <div className="page-shell pb-20 pt-[68px]">
 
       {/* ─── Page header ──────────────────────────────── */}
-      <div className="border-b border-white/8 bg-black">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-10 lg:py-14">
+      <div className="border-b border-white/8 bg-black/35">
+        <div className="container-shell py-10 lg:py-14">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
             <p className="label mb-2">Catalog</p>
             <h1 className="font-bebas text-5xl lg:text-7xl text-white tracking-wider">
@@ -74,10 +74,10 @@ export default function ProductsContent() {
         </div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 mt-8">
+      <div className="container-shell mt-8">
 
         {/* ─── Search + Sort bar ──────────────────────── */}
-        <div className="flex flex-col sm:flex-row gap-3 mb-8">
+        <div className="mb-8 flex flex-col gap-3 lg:flex-row">
           {/* Search */}
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
@@ -87,7 +87,7 @@ export default function ProductsContent() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search products..."
-              className="w-full pl-11 pr-10 py-3.5 rounded-full bg-white/5 border border-white/10 text-white placeholder:text-white/25 focus:outline-none focus:border-white/25 transition-all text-sm font-medium"
+              className="input-field py-3.5 pl-11 pr-10"
             />
             {query && (
               <button onClick={() => setQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white">
@@ -96,11 +96,11 @@ export default function ProductsContent() {
             )}
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 lg:ml-auto">
             {/* Filter toggle */}
             <button
               onClick={() => setFiltersOpen((o) => !o)}
-              className={`flex items-center gap-2 px-5 py-3.5 rounded-full border text-sm font-black uppercase tracking-wide transition-all ${
+              className={`flex items-center gap-2 rounded-full border px-5 py-3.5 text-xs font-black uppercase tracking-[0.12em] transition-all ${
                 filtersOpen
                   ? 'bg-white text-black border-white'
                   : 'bg-transparent border-white/15 text-white/60 hover:border-white/30 hover:text-white'
@@ -116,7 +116,7 @@ export default function ProductsContent() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="appearance-none pl-5 pr-10 py-3.5 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm font-medium focus:outline-none focus:border-white/20 transition-all cursor-pointer"
+                className="input-field cursor-pointer appearance-none py-3.5 pl-5 pr-10 text-white/70"
               >
                 {sortOptions.map((o) => (
                   <option key={o.value} value={o.value} className="bg-black">
@@ -129,18 +129,18 @@ export default function ProductsContent() {
           </div>
         </div>
 
-        <div className="flex gap-8">
+        <div className="flex gap-6 lg:gap-8">
           {/* ─── Sidebar ──────────────────────────────── */}
           <AnimatePresence>
             {filtersOpen && (
               <motion.aside
                 initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: 220 }}
+                animate={{ opacity: 1, width: 248 }}
                 exit={{ opacity: 0, width: 0 }}
                 transition={{ type: 'tween', duration: 0.22 }}
                 className="shrink-0 overflow-hidden"
               >
-                <div className="w-[220px] space-y-8 pr-4">
+                <div className="panel w-[248px] space-y-7 p-4">
                   {hasFilters && (
                     <button
                       onClick={clearFilters}
@@ -153,10 +153,10 @@ export default function ProductsContent() {
                   {/* Category */}
                   <div>
                     <h3 className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-4">Category</h3>
-                    <div className="space-y-1">
+                    <div className="space-y-1.5">
                       <button
                         onClick={() => setSelectedCategory('')}
-                        className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                        className={`w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-all ${
                           !selectedCategory ? 'bg-white text-black' : 'text-white/50 hover:text-white hover:bg-white/5'
                         }`}
                       >
@@ -166,7 +166,7 @@ export default function ProductsContent() {
                         <button
                           key={cat.id}
                           onClick={() => setSelectedCategory(cat.id === selectedCategory ? '' : cat.id)}
-                          className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center justify-between ${
+                          className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-all ${
                             selectedCategory === cat.id ? 'bg-white text-black' : 'text-white/50 hover:text-white hover:bg-white/5'
                           }`}
                         >
@@ -204,7 +204,7 @@ export default function ProductsContent() {
                         <button
                           key={r}
                           onClick={() => setMinRating(r)}
-                          className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 ${
+                          className={`flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-all ${
                             minRating === r ? 'bg-white text-black' : 'text-white/50 hover:text-white hover:bg-white/5'
                           }`}
                         >
@@ -243,19 +243,19 @@ export default function ProductsContent() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="flex flex-col items-center justify-center py-32 text-center"
+                  className="flex flex-col items-center justify-center py-28 text-center"
                 >
                   <p className="font-bebas text-4xl text-white/20 tracking-widest mb-4">NO RESULTS</p>
                   <p className="text-sm text-white/30 mb-8 font-medium">Try adjusting your filters or search query.</p>
                   <button
                     onClick={clearFilters}
-                    className="px-7 py-3 rounded-full border border-white/20 text-sm font-black uppercase tracking-wide text-white hover:bg-white hover:text-black transition-all"
+                    className="btn-secondary px-7 py-3"
                   >
                     Clear Filters
                   </button>
                 </motion.div>
               ) : (
-                <motion.div layout className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+                <motion.div layout className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
                   {filtered.map((product, i) => (
                     <motion.div key={product.id} layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                       <ProductCard product={product} index={i} />

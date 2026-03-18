@@ -10,7 +10,7 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import ProductCard from '@/components/products/ProductCard';
-import { products, categories, getFeaturedProducts, getNewArrivals } from '@/lib/data';
+import { categories, getFeaturedProducts, getNewArrivals } from '@/lib/data';
 
 /* ─── Static data ─────────────────────────────────────────────── */
 const heroSlides = [
@@ -140,7 +140,7 @@ export default function HomePage() {
                     >
                       <Link
                         href={slide.href}
-                        className="group flex items-center gap-3 px-8 py-4 rounded-full bg-[#FF3B30] text-white text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-200 shadow-xl shadow-red-500/25"
+                        className="btn-primary group px-8 py-4"
                       >
                         {slide.cta}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -308,7 +308,7 @@ export default function HomePage() {
           </div>
           <Link
             href="/products?sale=true"
-            className="group shrink-0 flex items-center gap-3 px-10 py-5 rounded-full bg-black text-white text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-200"
+            className="group btn-secondary shrink-0 border-black bg-black px-10 py-5 text-white hover:border-white"
           >
             Shop the Sale
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -332,7 +332,7 @@ export default function HomePage() {
                 <button
                   key={t}
                   onClick={() => setActiveTab(t)}
-                  className={`px-5 py-2 rounded-full text-[12px] font-black uppercase tracking-wider transition-all duration-200 ${
+                  className={`rounded-full px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.12em] transition-all duration-200 ${
                     activeTab === t
                       ? 'bg-white text-black'
                       : 'text-white/50 hover:text-white'
@@ -359,7 +359,7 @@ export default function HomePage() {
           <div className="text-center mt-12">
             <Link
               href="/products"
-              className="group inline-flex items-center gap-3 px-10 py-4 rounded-full border border-white/20 text-white text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-200"
+              className="btn-secondary group px-10 py-4"
             >
               View All Products
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -450,11 +450,11 @@ function NewsletterForm() {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter your email"
         required
-        className="flex-1 px-5 py-4 rounded-full bg-white/5 border border-white/10 text-white placeholder:text-white/25 focus:outline-none focus:border-white/30 transition-all text-sm font-medium"
+        className="input-field flex-1 py-4"
       />
       <button
         type="submit"
-        className="px-7 py-4 rounded-full bg-[#FF3B30] text-white font-black text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-200 whitespace-nowrap"
+        className="btn-primary px-7 py-4"
       >
         Subscribe →
       </button>

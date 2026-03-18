@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, ShoppingBag, Heart, ArrowLeft, Minus, Plus, Check, Shield, Truck, RefreshCcw, Sparkles, Tag } from 'lucide-react';
+import { Star, ShoppingBag, Heart, Minus, Plus, Check, Shield, Truck, RefreshCcw, Sparkles, Tag } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -61,11 +61,11 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black pt-[68px]">
+    <div className="page-shell pt-[68px]">
 
       {/* ─── Breadcrumb ──────────────────────── */}
       <div className="border-b border-white/8">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-4">
+        <div className="container-shell py-4">
           <div className="flex items-center gap-2 text-xs font-medium text-white/30">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <span>/</span>
@@ -79,7 +79,7 @@ export default function ProductDetailPage() {
       </div>
 
       {/* ─── Main product area ───────────────── */}
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-10 lg:py-16">
+      <div className="container-shell py-10 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
 
           {/* Left: Images */}
@@ -216,7 +216,7 @@ export default function ProductDetailPage() {
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={handleAddToCart}
-                className={`flex-1 flex items-center justify-center gap-2.5 py-4 rounded-full font-black text-sm uppercase tracking-widest transition-all duration-200 ${
+                className={`flex flex-1 items-center justify-center gap-2.5 rounded-full py-4 text-xs font-black uppercase tracking-[0.13em] transition-all duration-200 ${
                   added
                     ? 'bg-green-500 text-white'
                     : 'bg-[#FF3B30] text-white hover:bg-white hover:text-black'
@@ -240,7 +240,7 @@ export default function ProductDetailPage() {
 
             <Link
               href="/checkout"
-              className="block text-center py-4 rounded-full border border-white/15 text-white font-black text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-200"
+              className="btn-secondary block py-4 text-center"
             >
               Buy Now — Checkout
             </Link>
@@ -248,7 +248,7 @@ export default function ProductDetailPage() {
             {/* Guarantees */}
             <div className="grid grid-cols-3 gap-3 pt-2">
               {guarantees.map(({ icon: Icon, label }) => (
-                <div key={label} className="flex flex-col items-center gap-2 p-4 rounded-xl border border-white/8 text-center">
+                <div key={label} className="panel flex flex-col items-center gap-2 p-4 text-center">
                   <Icon className="w-4 h-4 text-[#FF3B30]" />
                   <span className="text-[10px] text-white/40 font-bold uppercase tracking-wide">{label}</span>
                 </div>
@@ -302,7 +302,7 @@ export default function ProductDetailPage() {
               {activeTab === 'Specifications' && product.specs && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
                   {Object.entries(product.specs).map(([key, val]) => (
-                    <div key={key} className="flex items-center justify-between p-4 rounded-xl border border-white/8">
+                    <div key={key} className="panel flex items-center justify-between p-4">
                       <span className="text-sm text-white/35 font-medium">{key}</span>
                       <span className="text-sm text-white font-bold">{val}</span>
                     </div>
@@ -317,7 +317,7 @@ export default function ProductDetailPage() {
                     { name: 'James K.', rating: 4, text: 'Great value for money. Fast shipping and well-packaged. Would definitely recommend.', date: '1 week ago' },
                     { name: 'Emily R.', rating: 5, text: "Best purchase I've made this year. The attention to detail is remarkable.", date: '2 weeks ago' },
                   ].map((review, i) => (
-                    <div key={i} className="p-6 rounded-2xl border border-white/8">
+                    <div key={i} className="panel p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-full bg-[#FF3B30] flex items-center justify-center text-white text-sm font-black font-bebas text-xl tracking-wider">
