@@ -113,7 +113,7 @@ export default function FAQPage() {
               <p className="text-white/45">No results found for &quot;{query}&quot;.</p>
             </motion.div>
           ) : (
-            <div className="mx-auto max-w-4xl space-y-11">
+              <div className="mx-auto max-w-4xl space-y-8">
               {filtered.map((cat) => (
                 <motion.div key={cat.category} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}>
                   <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-white">

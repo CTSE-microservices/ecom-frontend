@@ -216,10 +216,10 @@ export default function ProductDetailPage() {
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={handleAddToCart}
-                className={`flex flex-1 items-center justify-center gap-2.5 rounded-full py-3.5 text-xs font-black uppercase tracking-[0.13em] transition-all duration-200 ${
+                className={`flex flex-1 items-center justify-center gap-2.5 rounded-full py-3.5 text-xs font-black uppercase tracking-[0.13em] transition-all duration-200 border ${
                   added
-                    ? 'bg-green-500 text-white'
-                    : 'bg-[#FF3B30] text-white hover:bg-white hover:text-black'
+                    ? 'border-white/20 bg-black text-white'
+                    : 'border-[#FF3B30] bg-[#FF3B30] text-white hover:bg-white hover:text-black hover:border-white'
                 }`}
               >
                 {added ? <Check className="w-5 h-5" /> : <ShoppingBag className="w-5 h-5" />}
@@ -316,11 +316,13 @@ export default function ProductDetailPage() {
                     { name: 'Sarah M.', rating: 5, text: 'Absolutely love this product! Exceeded all expectations. The quality is impeccable.', date: '2 days ago' },
                     { name: 'James K.', rating: 4, text: 'Great value for money. Fast shipping and well-packaged. Would definitely recommend.', date: '1 week ago' },
                     { name: 'Emily R.', rating: 5, text: "Best purchase I've made this year. The attention to detail is remarkable.", date: '2 weeks ago' },
-                  ].map((review, i) => (
+                  ].map((review, i) => {
+                    const avatarBg = i === 0 ? 'bg-[#FF3B30]' : i === 1 ? 'bg-white/[0.12] border border-white/15' : 'bg-[#FF3B30]/55';
+                    return (
                     <div key={i} className="panel p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-[#FF3B30] flex items-center justify-center text-white text-sm font-black font-bebas text-xl tracking-wider">
+                          <div className={`w-10 h-10 rounded-full ${avatarBg} flex items-center justify-center text-white text-sm font-black font-bebas text-xl tracking-wider`}>
                             {review.name[0]}
                           </div>
                           <div>
@@ -336,7 +338,7 @@ export default function ProductDetailPage() {
                       </div>
                       <p className="text-sm text-white/45 leading-relaxed">{review.text}</p>
                     </div>
-                  ))}
+                  )})}
                 </div>
               )}
             </motion.div>

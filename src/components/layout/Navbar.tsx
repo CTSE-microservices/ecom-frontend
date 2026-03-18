@@ -52,8 +52,8 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-black/96 border-b border-white/12 shadow-2xl shadow-black/40'
-            : 'bg-black/80 backdrop-blur-xl border-b border-white/8'
+            ? 'bg-black/95 border-b border-white/10 shadow-2xl shadow-black/50'
+            : 'bg-black/50 backdrop-blur-xl border-b border-white/0'
         }`}
       >
         <div className="container-shell">
@@ -91,7 +91,7 @@ export default function Navbar() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 8 }}
                           transition={{ duration: 0.18 }}
-                          className="absolute top-full left-1/2 mt-3 w-56 -translate-x-1/2 overflow-hidden rounded-2xl border border-white/16 bg-[#111] shadow-2xl shadow-black/55"
+                          className="absolute top-full left-1/2 mt-3 w-56 -translate-x-1/2 overflow-hidden rounded-2xl border border-white/12 bg-[#0f0f10] shadow-2xl shadow-black/55"
                         >
                           {link.children.map((child) => (
                             <Link
@@ -177,7 +177,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 8 }}
                         transition={{ duration: 0.16 }}
-                        className="absolute right-0 top-full mt-2 w-48 rounded-2xl border border-white/20 bg-[#111] py-1 shadow-2xl"
+                        className="absolute right-0 top-full mt-2 w-48 rounded-2xl border border-white/12 bg-[#0f0f10] py-1 shadow-2xl"
                       >
                         <div className="border-b border-white/10 px-4 py-3">
                           <p className="truncate text-xs font-bold text-white">{user.name}</p>

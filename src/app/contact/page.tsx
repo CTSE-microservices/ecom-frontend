@@ -66,7 +66,7 @@ export default function ContactPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="panel flex min-h-[360px] flex-col items-center justify-center px-6 text-center"
               >
-                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white">
+                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#FF3B30] text-white">
                   <Check className="h-7 w-7" />
                 </div>
                 <h3 className="font-outfit text-3xl font-semibold text-white">Message Sent</h3>
@@ -103,7 +103,8 @@ export default function ContactPage() {
                     onChange={(e) => f('message', e.target.value)}
                     placeholder="Tell us more..."
                     rows={7}
-                    className="w-full rounded-3xl border border-white/14 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 focus:border-white/35 focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/25"
+                    style={{ borderRadius: '14px' }}
+                    className="input-field resize-none"
                   />
                 </div>
 

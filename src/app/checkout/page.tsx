@@ -20,7 +20,7 @@ function StepIndicator({ current }: { current: number }) {
             <div
               className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold transition-all ${
                 i < current
-                  ? 'bg-emerald-500 text-white'
+                  ? 'bg-white text-black'
                   : i === current
                     ? 'bg-[#FF3B30] text-white'
                     : 'bg-white/6 text-white/45'
@@ -30,7 +30,7 @@ function StepIndicator({ current }: { current: number }) {
             </div>
             <span className={`hidden text-sm font-medium sm:block ${i === current ? 'text-white' : 'text-white/45'}`}>{step}</span>
           </div>
-          {i < steps.length - 1 && <div className={`h-px max-w-16 flex-1 ${i < current ? 'bg-emerald-500' : 'bg-white/12'}`} />}
+          {i < steps.length - 1 && <div className={`h-px max-w-16 flex-1 ${i < current ? 'bg-white/30' : 'bg-white/12'}`} />}
         </React.Fragment>
       ))}
     </div>
@@ -88,9 +88,9 @@ function PaymentStep({ onNext, onBack }: { onNext: () => void; onBack: () => voi
 
   return (
     <form onSubmit={(e) => { e.preventDefault(); onNext(); }} className="space-y-4">
-      <div className="flex items-center gap-2 rounded-2xl border border-emerald-500/30 bg-emerald-500/12 p-3">
-        <Lock className="h-4 w-4 text-emerald-400" />
-        <span className="text-xs font-medium text-emerald-300">Your payment is secured with 256-bit SSL encryption</span>
+      <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.04] p-3">
+        <Lock className="h-4 w-4 text-white/50" />
+        <span className="text-xs font-medium text-white/55">Your payment is secured with 256-bit SSL encryption</span>
       </div>
       <div>
         <label className="mb-1.5 block text-xs font-medium text-white/45">Card Number</label>
@@ -162,7 +162,7 @@ function ReviewStep({ shipping, onBack, onComplete }: { shipping: { name: string
 
       <div className="panel space-y-2 p-4">
         <div className="flex justify-between text-sm"><span className="text-white/45">Subtotal</span><span className="text-white">{formatPrice(totalPrice)}</span></div>
-        <div className="flex justify-between text-sm"><span className="text-white/45">Shipping</span><span className={shippingCost === 0 ? 'font-semibold text-emerald-400' : 'text-white'}>{shippingCost === 0 ? 'FREE' : formatPrice(shippingCost)}</span></div>
+        <div className="flex justify-between text-sm"><span className="text-white/45">Shipping</span><span className={shippingCost === 0 ? 'font-black text-[#FF3B30] text-xs uppercase tracking-wide' : 'text-white'}>{shippingCost === 0 ? 'FREE' : formatPrice(shippingCost)}</span></div>
         <div className="flex justify-between text-sm"><span className="text-white/45">Tax</span><span className="text-white">{formatPrice(tax)}</span></div>
         <hr className="my-2 border-white/10" />
         <div className="flex justify-between"><span className="text-sm font-semibold text-white">Total</span><span className="text-xl font-black text-white">{formatPrice(total)}</span></div>
@@ -173,7 +173,7 @@ function ReviewStep({ shipping, onBack, onComplete }: { shipping: { name: string
           <ArrowLeft className="h-4 w-4" />
           Back
         </button>
-        <button onClick={handlePlace} disabled={loading} className="btn-primary flex-1 justify-center py-3.5 disabled:opacity-70">
+        <button onClick={handlePlace} disabled={loading} className="btn-primary flex-1 justify-center py-3.5 disabled:cursor-not-allowed disabled:opacity-60">
           {loading ? <><div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />Processing...</> : <><ShoppingBag className="h-4 w-4" />Place Order</>}
         </button>
       </div>
@@ -192,7 +192,9 @@ export default function CheckoutPage() {
   if (items.length === 0 && !orderDone) {
     return (
       <div className="page-shell flex min-h-screen flex-col items-center justify-center px-4 text-center">
-        <div className="mb-4 text-5xl">Cart</div>
+        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10">
+          <ShoppingBag className="h-7 w-7 text-white/25" />
+        </div>
         <h1 className="section-title text-4xl">Your Bag Is Empty</h1>
         <Link href="/products" className="btn-primary mt-5 px-7 py-3.5">Browse Products</Link>
       </div>
@@ -231,7 +233,7 @@ export default function CheckoutPage() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', delay: 0.2 }}
-            className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500 shadow-2xl shadow-emerald-500/30"
+            className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#FF3B30] shadow-2xl shadow-[#FF3B30]/30"
           >
             <Check className="h-10 w-10 text-white" />
           </motion.div>

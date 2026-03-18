@@ -72,7 +72,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                 onClick={handleAddToCart}
                 className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl px-3 py-3 text-[11px] font-black uppercase tracking-[0.12em] transition-all duration-200 ${
                   added
-                    ? 'bg-green-500 text-white'
+                    ? 'bg-white text-black'
                     : 'bg-black text-white hover:bg-[#FF3B30]'
                 }`}
               >
@@ -109,7 +109,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             <button
               onClick={handleLike}
               aria-label="Wishlist"
-              className="absolute right-3 top-3 rounded-full bg-white/80 p-2.5 opacity-0 backdrop-blur-sm transition-all hover:bg-white focus:opacity-100 group-hover:opacity-100"
+              className="absolute right-3 top-3 rounded-full bg-white/80 p-2.5 opacity-60 backdrop-blur-sm transition-all hover:bg-white group-hover:opacity-100"
             >
               <Heart
                 className={`w-3.5 h-3.5 transition-all ${liked ? 'fill-[#FF3B30] stroke-[#FF3B30]' : 'stroke-black'}`}
@@ -135,7 +135,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                 )}
               </div>
               {product.isBestSeller && (
-                <span className="rounded-full bg-white px-2 py-1 text-[9px] font-black uppercase tracking-wider text-black">
+                <span className="rounded-full bg-white px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-black">
                   Best Seller
                 </span>
               )}

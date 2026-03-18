@@ -142,7 +142,7 @@ export default function ProductsContent() {
                 transition={{ type: 'tween', duration: 0.22 }}
                 className="shrink-0 overflow-hidden"
               >
-                <div className="w-[272px] space-y-7 rounded-3xl border border-white/12 bg-[#101011] p-5 shadow-[0_14px_40px_rgba(0,0,0,0.35)]">
+                <div className="w-[272px] space-y-7 rounded-3xl border border-white/12 bg-[#0f0f10] p-5 shadow-[0_14px_40px_rgba(0,0,0,0.35)]">
                   {hasFilters && (
                     <button
                       onClick={clearFilters}
@@ -190,7 +190,11 @@ export default function ProductsContent() {
                       max={5000}
                       step={50}
                       value={priceRange[1]}
-                      onChange={(e) => setPriceRange([0, Number(e.target.value)])}
+                      onChange={(e) => {
+                        const val = Number(e.target.value);
+                        setPriceRange([0, val]);
+                      }}
+                      style={{ '--value': `${(priceRange[1] / 5000) * 100}%` } as React.CSSProperties}
                       className="w-full cursor-pointer"
                     />
                     <div className="flex justify-between text-xs text-white/25 mt-1 font-medium">

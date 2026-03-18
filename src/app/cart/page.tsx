@@ -76,7 +76,7 @@ export default function CartPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: -30, height: 0, marginBottom: 0 }}
                   transition={{ delay: i * 0.04 }}
-                  className="panel flex gap-5 rounded-3xl p-5 transition-colors hover:border-white/18"
+                  className="panel flex gap-5 rounded-3xl p-5 transition-colors hover:border-white/20"
                 >
                   {/* Image */}
                   <Link href={`/products/${item.product.id}`} className="shrink-0">
@@ -154,7 +154,7 @@ export default function CartPage() {
                 <div className="flex justify-between text-sm">
                   <span className="text-white/40 font-medium">Shipping</span>
                   {shipping === 0 ? (
-                    <span className="text-green-400 font-black uppercase text-xs tracking-wide">FREE</span>
+                    <span className="font-black text-[#FF3B30] uppercase text-xs tracking-wide">FREE</span>
                   ) : (
                     <span className="text-white font-bold">{formatPrice(shipping)}</span>
                   )}
