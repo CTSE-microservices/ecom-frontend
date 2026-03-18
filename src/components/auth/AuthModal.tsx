@@ -54,7 +54,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-white/45">Email</label>
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-white/45">Email</label>
         <input
           {...register('email')}
           type="email"
@@ -64,7 +64,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
         {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email.message}</p>}
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-white/45">Password</label>
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-white/45">Password</label>
         <div className="relative">
           <input
             {...register('password')}
@@ -78,11 +78,11 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
         </div>
         {errors.password && <p className="text-xs text-red-400 mt-1">{errors.password.message}</p>}
       </div>
-      {error && <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2">{error}</p>}
+      {error && <p className="rounded-xl border border-red-400/25 bg-red-400/10 px-3 py-2 text-xs text-red-300">{error}</p>}
       <button
         type="submit"
         disabled={isSubmitting}
-        className="btn-primary w-full justify-center rounded-2xl py-3.5 text-xs disabled:opacity-70"
+        className="btn-primary w-full justify-center py-3.5 text-xs disabled:opacity-70"
       >
         {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
         Sign In
@@ -112,17 +112,17 @@ function SignupForm({ onSuccess }: { onSuccess: () => void }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-white/45">Full Name</label>
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-white/45">Full Name</label>
         <input {...register('name')} placeholder="John Doe" className="input-field rounded-2xl" />
         {errors.name && <p className="text-xs text-red-400 mt-1">{errors.name.message}</p>}
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-white/45">Email</label>
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-white/45">Email</label>
         <input {...register('email')} type="email" placeholder="you@example.com" className="input-field rounded-2xl" />
         {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email.message}</p>}
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-white/45">Password</label>
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-white/45">Password</label>
         <div className="relative">
           <input {...register('password')} type={showPass ? 'text' : 'password'} placeholder="••••••••" className="input-field rounded-2xl pr-10" />
           <button type="button" onClick={() => setShowPass(s => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70">
@@ -132,12 +132,12 @@ function SignupForm({ onSuccess }: { onSuccess: () => void }) {
         {errors.password && <p className="text-xs text-red-400 mt-1">{errors.password.message}</p>}
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-white/45">Confirm Password</label>
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-white/45">Confirm Password</label>
         <input {...register('confirmPassword')} type={showPass ? 'text' : 'password'} placeholder="••••••••" className="input-field rounded-2xl" />
         {errors.confirmPassword && <p className="text-xs text-red-400 mt-1">{errors.confirmPassword.message}</p>}
       </div>
-      {error && <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2">{error}</p>}
-      <button type="submit" disabled={isSubmitting} className="btn-primary w-full justify-center rounded-2xl py-3.5 text-xs disabled:opacity-70">
+      {error && <p className="rounded-xl border border-red-400/25 bg-red-400/10 px-3 py-2 text-xs text-red-300">{error}</p>}
+      <button type="submit" disabled={isSubmitting} className="btn-primary w-full justify-center py-3.5 text-xs disabled:opacity-70">
         {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
         Create Account
       </button>
@@ -174,14 +174,15 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', onSuc
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="fixed inset-0 z-[61] flex items-center justify-center p-4"
           >
-            <div className="w-full max-w-md overflow-hidden rounded-3xl border border-white/12 bg-[#0e0e0f] shadow-2xl">
+            <div className="w-full max-w-[460px] overflow-hidden rounded-[28px] border border-white/14 bg-[#0d0d10] shadow-[0_30px_100px_rgba(0,0,0,0.8)]">
+              <div className="h-1.5 w-full bg-gradient-to-r from-[#ff6b61] via-[#FF3B30] to-[#ff6b61]" />
               {/* Header */}
-              <div className="flex items-center justify-between p-6 pb-0">
+              <div className="flex items-start justify-between p-6 pb-0 sm:p-7 sm:pb-0">
                 <div>
-                  <h2 className="section-title text-3xl text-white">
+                  <h2 className="font-outfit text-2xl font-semibold text-white sm:text-[1.75rem]">
                     {tab === 'login' ? 'Welcome back' : 'Create account'}
                   </h2>
-                  <p className="mt-1 text-sm text-white/45">
+                  <p className="mt-1 text-sm text-white/58">
                     {tab === 'login' ? 'Sign in to your account' : 'Join LuxeStore today'}
                   </p>
                 </div>
@@ -191,14 +192,14 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', onSuc
               </div>
 
               {/* Tabs */}
-              <div className="mx-6 mt-6 flex rounded-full border border-white/10 bg-white/5 p-1">
+              <div className="mx-6 mt-6 flex rounded-xl border border-white/12 bg-[#131315] p-1 sm:mx-7">
                 {(['login', 'signup'] as const).map((t) => (
                   <button
                     key={t}
                     onClick={() => setTab(t)}
-                    className={`flex-1 rounded-full py-2.5 text-xs font-black uppercase tracking-[0.12em] transition-all ${
+                    className={`flex-1 rounded-lg py-2.5 text-xs font-black uppercase tracking-[0.12em] transition-all ${
                       tab === t
-                        ? 'bg-[#FF3B30] text-white'
+                        ? 'bg-[#FF3B30] text-white shadow-[0_8px_24px_rgba(255,59,48,0.35)]'
                         : 'text-white/45 hover:text-white'
                     }`}
                   >
@@ -208,7 +209,7 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', onSuc
               </div>
 
               {/* Form */}
-              <div className="p-6">
+              <div className="p-6 sm:p-7">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={tab}
@@ -225,7 +226,7 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login', onSuc
                   </motion.div>
                 </AnimatePresence>
 
-                <p className="mt-4 text-center text-xs text-white/40">
+                <p className="mt-5 text-center text-xs text-white/40">
                   {tab === 'login' ? (
                     <>Don&apos;t have an account?{' '}
                       <button onClick={() => setTab('signup')} className="font-medium text-[#FF3B30] hover:text-[#ff796f]">Sign up</button>

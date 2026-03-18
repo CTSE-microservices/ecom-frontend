@@ -1,0 +1,146 @@
+UI Issues Audit for LuxeStore
+
+Global UI Issues
+
+1. Navbar alignment and spacing
+- Menu items (All Products, Collections, About, Contact) are not perfectly centered.
+- Spacing between nav items is uneven.
+- The Sign Up button feels detached from the rest of the navbar.
+- Search/cart/login icons are not vertically aligned with nearby elements.
+
+2. Inconsistent container widths
+- Some sections are full-width while others are boxed.
+- This creates visual jumps and makes the layout feel inconsistent.
+
+3. Weak visual hierarchy
+- Too many sections use the same dark + glass style.
+- Headings do not stand out enough from body text.
+- Subtext is too dim in some sections and becomes hard to scan.
+
+4. Overuse of glassmorphism
+- Glass/blur cards are used too often.
+- Interactive and non-interactive elements look too similar.
+- Important sections do not visually stand apart.
+
+5. Inconsistent border radius and shadow usage
+- Cards and buttons use different corner radii and visual depths.
+- The UI system feels inconsistent instead of deliberate.
+
+Home Page Issues
+
+6. Broken category grid layout
+- The Home & Living category card on the right looks cut off / overflowed.
+- The category grid feels unbalanced.
+
+7. Missing hover states in category cards
+- Cards do not provide strong visual feedback on hover.
+- Clickability is not obvious enough.
+
+8. Stats section breaks the visual theme
+- The white stats section feels disconnected from the rest of the dark site.
+- It looks like it belongs to a different design language.
+
+9. Newsletter section alignment
+- Input and button alignment feels awkward.
+- The right side feels cramped and visually heavy.
+
+Product Listing Page Issues
+
+10. Search + filter bar alignment
+- Search bar is too wide relative to the filters.
+- Filter controls feel like they are floating rather than anchored.
+
+11. Product card inconsistencies
+- Sale/new badges overlap inconsistently.
+- Card padding is not consistent.
+- Product image proportions vary slightly between cards.
+
+12. Product image text readability
+- Category labels over images are not always readable.
+- Some text sits directly on busy imagery without enough contrast.
+
+13. Product page header clipping
+- In the products page screenshot, the "ALL PRODUCTS" heading is clipped at the top.
+- This suggests bad vertical spacing or a section overlapping the navbar.
+
+About Page Issues
+
+14. Hero text readability
+- "DESIGN-FIRST COMMERCE" competes with the image background.
+- Contrast is too low in some parts of the hero.
+
+15. Values section spacing
+- Value cards are too close together.
+- The section needs more breathing room.
+
+16. Team section alignment
+- Team images feel slightly inconsistent in size or crop.
+- Names and roles do not align perfectly beneath each card.
+
+17. Footer begins too abruptly on About page
+- The transition from team/community content into footer content feels abrupt.
+- There is not enough separation between content and footer.
+
+Contact Page Issues
+
+18. Form and contact info imbalance
+- Left-side contact info is too narrow.
+- Right-side form dominates the page too much.
+
+19. Input contrast issue
+- Placeholder text is too dim.
+- Field labels and placeholders are harder to read than they should be.
+
+20. Button alignment problem
+- "Send Message" button does not feel properly aligned with the form structure.
+
+21. Form UX states missing
+- No visible validation feedback.
+- No clear error state styling.
+- No strong focus state on inputs.
+
+Footer Issues
+
+22. Footer is too dense
+- A lot of content is packed into a small vertical space.
+- Link groups need stronger hierarchy and spacing.
+
+23. Floating Shop Now CTA feels disconnected
+- The Shop Now button looks visually detached from surrounding footer content.
+- It draws attention but without clear structural justification.
+
+Cross-Page UX / Functional Issues
+
+24. Missing clear active nav state
+- Current page indication is too subtle or inconsistent.
+
+25. Missing loading states
+- No skeleton loaders or visible loading behavior for async content.
+
+26. Missing empty states
+- Product and category pages do not appear prepared for no-results / no-data cases.
+
+27. Inconsistent interaction behavior
+- Some UI elements animate or glow, while others do not.
+- Hover/focus behavior is not standardized across components.
+
+28. Accessibility concerns
+- Low contrast text in multiple areas.
+- Some click targets appear small.
+- Readability suffers in sections with text over images.
+
+Most Important Overall Issue
+
+29. Lack of system consistency
+- The site has good visual potential, but spacing, hierarchy, alignment, and component behavior are not unified.
+- The main issue is not the aesthetic direction — it is the inconsistency of execution.
+
+Recommended Direction for Codex
+
+Refactor the UI around a consistent design system:
+- consistent spacing scale
+- consistent container widths
+- consistent typography hierarchy
+- standardized card, button, input, badge, and navbar components
+- better contrast and accessibility
+- better layout balance across pages

@@ -18,7 +18,7 @@ export default function CartPage() {
   /* ── Empty state ── */
   if (items.length === 0) {
     return (
-      <div className="page-shell flex min-h-screen flex-col items-center justify-center px-6 pt-[68px] text-center">
+      <div className="page-shell flex min-h-screen flex-col items-center justify-center px-6 text-center">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="max-w-sm">
           <div className="w-24 h-24 rounded-full border border-white/10 flex items-center justify-center mx-auto mb-8">
             <ShoppingCart className="w-10 h-10 text-white/20" />
@@ -38,18 +38,18 @@ export default function CartPage() {
   }
 
   return (
-    <div className="page-shell pb-20 pt-[68px]">
+    <div className="page-shell pb-20">
       <div className="container-shell">
 
         {/* ─── Page header ──────────────────── */}
-        <div className="border-b border-white/8 py-10">
+        <div className="border-b border-white/8 py-8 lg:py-10">
           <Link href="/products" className="flex items-center gap-2 text-xs font-black text-white/30 uppercase tracking-wide hover:text-white transition-colors mb-5">
             <ArrowLeft className="w-3.5 h-3.5" /> Continue Shopping
           </Link>
           <div className="flex items-end justify-between">
             <div>
               <p className="label mb-2">Review</p>
-              <h1 className="font-bebas text-5xl lg:text-6xl text-white tracking-wider">
+              <h1 className="font-bebas text-5xl leading-none lg:text-6xl text-white tracking-wider">
                 YOUR BAG&nbsp;
                 <span className="text-white/20">({totalItems})</span>
               </h1>
@@ -64,10 +64,10 @@ export default function CartPage() {
         </div>
 
         {/* ─── Content grid ─────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-10">
+        <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.7fr)_minmax(320px,1fr)] lg:gap-10">
 
           {/* Cart items */}
-          <div className="lg:col-span-2 space-y-3">
+          <div className="space-y-3">
             <AnimatePresence>
               {items.map((item, i) => (
                 <motion.div
@@ -76,7 +76,7 @@ export default function CartPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: -30, height: 0, marginBottom: 0 }}
                   transition={{ delay: i * 0.04 }}
-                  className="panel flex gap-5 p-5 transition-colors hover:border-white/18"
+                  className="panel flex gap-5 rounded-3xl p-5 transition-colors hover:border-white/18"
                 >
                   {/* Image */}
                   <Link href={`/products/${item.product.id}`} className="shrink-0">
@@ -87,7 +87,7 @@ export default function CartPage() {
 
                   {/* Details */}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2 mb-2">
+                    <div className="mb-2 flex items-start justify-between gap-2">
                       <div>
                         <p className="text-[10px] font-black text-[#FF3B30] uppercase tracking-widest mb-1">{item.product.category}</p>
                         <Link href={`/products/${item.product.id}`}>
@@ -105,7 +105,7 @@ export default function CartPage() {
                       </button>
                     </div>
 
-                    <div className="flex items-center justify-between mt-4">
+                    <div className="mt-4 flex items-center justify-between">
                       {/* Quantity */}
                       <div className="flex items-center border border-white/10 rounded-full overflow-hidden">
                         <button
@@ -141,8 +141,8 @@ export default function CartPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
             <div className="panel sticky top-24 overflow-hidden rounded-2xl">
               {/* Header */}
-              <div className="px-6 py-5 border-b border-white/8">
-                <h2 className="font-bebas text-2xl text-white tracking-wider">ORDER SUMMARY</h2>
+              <div className="border-b border-white/8 px-6 py-5">
+                <h2 className="font-outfit text-xl font-semibold text-white">Order Summary</h2>
               </div>
 
               {/* Lines */}
@@ -175,9 +175,9 @@ export default function CartPage() {
               )}
 
               {/* Total */}
-              <div className="px-6 py-5 border-t border-white/8 flex items-center justify-between">
-                <span className="font-black text-white uppercase tracking-wide text-sm">Total</span>
-                <span className="font-bebas text-3xl text-white tracking-wider">{formatPrice(total)}</span>
+              <div className="flex items-center justify-between border-t border-white/8 px-6 py-5">
+                <span className="text-sm font-black uppercase tracking-wide text-white">Total</span>
+                <span className="font-outfit text-4xl font-semibold text-white">{formatPrice(total)}</span>
               </div>
 
               {/* CTA */}
@@ -189,7 +189,7 @@ export default function CartPage() {
                   Proceed to Checkout
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <p className="text-center text-[11px] text-white/20 font-medium">🔒 Encrypted &amp; secure checkout</p>
+                <p className="text-center text-[11px] font-medium text-white/26">Secure and encrypted checkout</p>
               </div>
             </div>
           </motion.div>

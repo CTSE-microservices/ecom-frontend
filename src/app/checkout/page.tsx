@@ -191,7 +191,7 @@ export default function CheckoutPage() {
 
   if (items.length === 0 && !orderDone) {
     return (
-      <div className="page-shell flex min-h-screen flex-col items-center justify-center px-4 pt-24 text-center">
+      <div className="page-shell flex min-h-screen flex-col items-center justify-center px-4 text-center">
         <div className="mb-4 text-5xl">Cart</div>
         <h1 className="section-title text-4xl">Your Bag Is Empty</h1>
         <Link href="/products" className="btn-primary mt-5 px-7 py-3.5">Browse Products</Link>
@@ -201,7 +201,7 @@ export default function CheckoutPage() {
 
   if (!user) {
     return (
-      <div className="page-shell flex min-h-screen flex-col items-center justify-center px-4 pt-24 text-center">
+      <div className="page-shell flex min-h-screen flex-col items-center justify-center px-4 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl border border-[#FF3B30]/25 bg-[#FF3B30]/10">
             <Lock className="h-8 w-8 text-[#FF3B30]" />
@@ -225,7 +225,7 @@ export default function CheckoutPage() {
 
   if (orderDone) {
     return (
-      <div className="page-shell flex min-h-screen flex-col items-center justify-center px-4 pt-24 text-center">
+      <div className="page-shell flex min-h-screen flex-col items-center justify-center px-4 text-center">
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
           <motion.div
             initial={{ scale: 0 }}
@@ -247,7 +247,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="page-shell pb-16 pt-20">
+    <div className="page-shell pb-16">
       <div className="container-shell max-w-2xl">
         <div className="py-8">
           <Link href="/cart" className="btn-ghost px-0 text-xs uppercase tracking-[0.12em]">

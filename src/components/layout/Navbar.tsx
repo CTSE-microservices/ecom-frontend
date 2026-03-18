@@ -36,6 +36,8 @@ export default function Navbar() {
   const { totalItems } = useCart();
   const { user, logout } = useAuth();
 
+  const isProductsRoute = pathname === '/products' || pathname.startsWith('/products/');
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -54,8 +56,8 @@ export default function Navbar() {
             : 'bg-black/80 backdrop-blur-xl border-b border-white/8'
         }`}
       >
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-          <div className="flex items-center justify-between h-16 lg:h-[68px] gap-6">
+        <div className="container-shell">
+          <div className="flex h-[68px] items-center justify-between gap-6 lg:h-[72px]">
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-0 group shrink-0" aria-label="LuxeStore Home">
@@ -65,18 +67,18 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-0 flex-1 justify-center">
+            <nav className="hidden flex-1 items-center justify-center lg:flex lg:gap-2">
               {navLinks.map((link) =>
                 link.children ? (
                   <div
                     key={link.label}
-                    className="relative"
+                    className="relative px-1"
                     onMouseEnter={() => setCollectionsOpen(true)}
                     onMouseLeave={() => setCollectionsOpen(false)}
                   >
                     <button
-                      className={`flex items-center gap-1 rounded-full px-4 py-2 text-[12px] font-bold tracking-[0.1em] transition-colors duration-150 uppercase ${
-                        collectionsOpen ? 'text-[#FF3B30]' : 'text-white/70 hover:text-white'
+                      className={`flex items-center gap-1 rounded-full px-4 py-2 text-[11px] font-black uppercase tracking-[0.1em] transition-colors duration-150 ${
+                        collectionsOpen ? 'text-white' : 'text-white/68 hover:text-white'
                       }`}
                     >
                       {link.label}
@@ -89,13 +91,13 @@ export default function Navbar() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 8 }}
                           transition={{ duration: 0.18 }}
-                          className="absolute top-full left-1/2 mt-2 w-56 -translate-x-1/2 overflow-hidden rounded-2xl border border-white/20 bg-[#111] shadow-2xl shadow-black/50"
+                          className="absolute top-full left-1/2 mt-3 w-56 -translate-x-1/2 overflow-hidden rounded-2xl border border-white/16 bg-[#111] shadow-2xl shadow-black/55"
                         >
                           {link.children.map((child) => (
                             <Link
                               key={child.href}
                               href={child.href}
-                              className="block border-b border-white/8 px-5 py-3 text-[12px] font-bold uppercase tracking-[0.12em] text-white/72 transition-colors hover:bg-white/6 hover:text-white last:border-0"
+                              className="block border-b border-white/8 px-5 py-3 text-[11px] font-black uppercase tracking-[0.12em] text-white/72 transition-colors hover:bg-white/6 hover:text-white last:border-0"
                             >
                               {child.label}
                             </Link>
@@ -108,13 +110,15 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href!}
-                    className={`rounded-full px-4 py-2 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors duration-150 ${
-                      pathname === link.href ? 'text-white' : 'text-white/60 hover:text-white'
+                    className={`relative rounded-full px-5 py-2 text-[11px] font-black uppercase tracking-[0.1em] transition-colors duration-150 ${
+                      (link.href === '/products' ? isProductsRoute : pathname === link.href)
+                        ? 'text-white'
+                        : 'text-white/62 hover:text-white'
                     }`}
                   >
                     {link.label}
-                    {pathname === link.href && (
-                      <span className="block h-px bg-[#FF3B30] mt-0.5 mx-auto" />
+                    {(link.href === '/products' ? isProductsRoute : pathname === link.href) && (
+                      <span className="absolute inset-x-3 -bottom-0.5 h-[2px] rounded-full bg-[#FF3B30]" />
                     )}
                   </Link>
                 )
@@ -122,14 +126,14 @@ export default function Navbar() {
             </nav>
 
             {/* Right Actions */}
-            <div className="flex items-center gap-1 lg:gap-2 shrink-0">
+            <div className="flex shrink-0 items-center gap-1.5 lg:gap-2">
               {/* Search */}
               <Link
                 href="/products"
                 className="rounded-full p-2.5 text-white/60 transition-all hover:bg-white/8 hover:text-white"
                 aria-label="Search"
               >
-                <Search className="w-[18px] h-[18px]" />
+                <Search className="h-[18px] w-[18px]" />
               </Link>
 
               {/* Cart */}
@@ -138,7 +142,7 @@ export default function Navbar() {
                 className="relative rounded-full p-2.5 text-white/60 transition-all hover:bg-white/8 hover:text-white"
                 aria-label="Cart"
               >
-                <ShoppingBag className="w-[18px] h-[18px]" />
+                <ShoppingBag className="h-[18px] w-[18px]" />
                 <AnimatePresence>
                   {totalItems > 0 && (
                     <motion.span
@@ -191,16 +195,16 @@ export default function Navbar() {
                   </AnimatePresence>
                 </div>
               ) : (
-                <div className="hidden lg:flex items-center gap-2 ml-2">
+                <div className="ml-2 hidden items-center gap-1.5 border-l border-white/12 pl-2 lg:flex">
                   <button
                     onClick={openLogin}
-                    className="rounded-full px-4 py-2 text-[12px] font-bold uppercase tracking-[0.1em] text-white/60 transition-colors hover:text-white"
+                    className="rounded-full px-4 py-2 text-[11px] font-black uppercase tracking-[0.1em] text-white/70 transition-colors hover:bg-white/8 hover:text-white"
                   >
                     Login
                   </button>
                   <button
                     onClick={openSignup}
-                    className="btn-primary"
+                    className="btn-primary px-5 py-2"
                   >
                     Sign Up
                   </button>

@@ -104,7 +104,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Content */}
-                <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-10">
+                <div className="container-shell relative z-10 w-full">
                   <div className="max-w-xl">
                     <motion.p
                       initial={{ opacity: 0, y: 16 }}
@@ -164,7 +164,7 @@ export default function HomePage() {
           PERKS BAR
       ════════════════════════════════════════ */}
       <section className="bg-[#0d0d0d] border-y border-white/8 py-5">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+        <div className="container-shell">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {perks.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex items-center gap-3 py-1">
@@ -182,8 +182,8 @@ export default function HomePage() {
       {/* ════════════════════════════════════════
           CATEGORIES — editorial grid
       ════════════════════════════════════════ */}
-      <section className="py-20 bg-black">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+      <section className="section-shell bg-black">
+        <div className="container-shell">
           <motion.div
             initial="hidden"
             whileInView="show"
@@ -206,7 +206,7 @@ export default function HomePage() {
           </motion.div>
 
           {/* Category grid — first 2 large, rest 3 small */}
-          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-12 lg:gap-4">
             {categories.map((cat, i) => (
               <motion.div
                 key={cat.id}
@@ -214,27 +214,29 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.07, ease: [0.25, 0.1, 0.25, 1] }}
-                className={i < 2 ? 'lg:col-span-2' : 'col-span-1'}
+                className={i < 2 ? 'lg:col-span-6' : 'lg:col-span-4'}
               >
                 <Link
                   href={`/products?category=${cat.id}`}
-                  className="group relative block overflow-hidden rounded-xl"
+                  className="group relative block overflow-hidden rounded-2xl border border-white/10"
                 >
-                  <div className={`relative ${i < 2 ? 'aspect-[4/3]' : 'aspect-square'} overflow-hidden bg-gray-900`}>
+                  <div className={`relative ${i < 2 ? 'aspect-[5/4]' : 'aspect-square'} overflow-hidden bg-gray-900`}>
                     <Image
                       src={cat.image}
                       alt={cat.name}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 640px) 50vw, 20vw"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 40vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10" />
+                    <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
 
                     {/* Label */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <p className="font-bebas text-2xl text-white tracking-widest leading-none">{cat.name.toUpperCase()}</p>
-                      <div className="flex items-center gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 translate-y-1 group-hover:translate-y-0">
+                    <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5">
+                      <div className="inline-flex rounded-full border border-white/20 bg-black/45 px-3 py-1.5 backdrop-blur-sm">
+                        <p className="font-bebas text-2xl leading-none tracking-widest text-white">{cat.name.toUpperCase()}</p>
+                      </div>
+                      <div className="mt-2 flex translate-y-1 items-center gap-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
                         <span className="text-xs font-bold text-[#FF3B30] uppercase tracking-wide">Shop Now</span>
                         <ArrowRight className="w-3 h-3 text-[#FF3B30]" />
                       </div>
@@ -250,8 +252,8 @@ export default function HomePage() {
       {/* ════════════════════════════════════════
           FEATURED DROPS — full-width swiper
       ════════════════════════════════════════ */}
-      <section className="py-20 bg-[#0a0a0a]">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+      <section className="section-shell bg-[#0a0a0a]">
+        <div className="container-shell">
           <div className="flex items-end justify-between mb-10">
             <div>
               <p className="label mb-2">Handpicked</p>
@@ -290,13 +292,13 @@ export default function HomePage() {
       {/* ════════════════════════════════════════
           PROMO BANNER — editorial full-bleed
       ════════════════════════════════════════ */}
-      <section className="relative py-28 overflow-hidden bg-[#FF3B30]">
+      <section className="relative overflow-hidden bg-[#FF3B30] py-24 lg:py-28">
         {/* Decorative large type watermark */}
         <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none">
           <span className="font-bebas text-[clamp(8rem,20vw,18rem)] text-white/10 tracking-widest whitespace-nowrap">SALE</span>
         </div>
 
-        <div className="relative max-w-[1440px] mx-auto px-6 lg:px-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+        <div className="container-shell relative flex flex-col items-center justify-between gap-10 lg:flex-row">
           <div>
             <p className="label text-white/70 mb-3">Limited Time Offer</p>
             <h2 className="font-bebas text-[clamp(3.5rem,8vw,7rem)] text-white leading-none">
@@ -319,8 +321,8 @@ export default function HomePage() {
       {/* ════════════════════════════════════════
           COLLECTION TABS — Best Sellers / New
       ════════════════════════════════════════ */}
-      <section className="py-20 bg-black">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+      <section className="section-shell bg-black">
+        <div className="container-shell">
           {/* Header + Tabs */}
           <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-5 mb-12">
             <div>
@@ -371,26 +373,26 @@ export default function HomePage() {
       {/* ════════════════════════════════════════
           TRUST / STATS
       ════════════════════════════════════════ */}
-      <section className="py-20 bg-white">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+      <section className="section-shell bg-black">
+        <div className="container-shell">
           <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-10 mb-14">
             <div>
               <p className="label text-[#FF3B30] mb-2">Why LuxeStore</p>
-              <h2 className="font-bebas text-5xl lg:text-6xl text-black tracking-wider">TRUSTED BY THOUSANDS</h2>
+              <h2 className="font-bebas text-5xl lg:text-6xl text-white tracking-wider">TRUSTED BY THOUSANDS</h2>
             </div>
             <div className="flex items-center gap-1">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-6 h-6 fill-[#FF3B30] stroke-[#FF3B30]" />
               ))}
-              <span className="ml-2 text-sm font-bold text-black">4.9 / 5 from 20,000+ reviews</span>
+              <span className="ml-2 text-sm font-bold text-white/70">4.9 / 5 from 20,000+ reviews</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             {stats.map(({ val, label }) => (
-              <div key={label} className="bg-white py-12 px-8 text-center">
-                <p className="font-bebas text-5xl lg:text-6xl text-black tracking-wider mb-1">{val}</p>
-                <p className="text-xs font-black text-gray-400 uppercase tracking-widest">{label}</p>
+              <div key={label} className="panel px-8 py-12 text-center">
+                <p className="mb-1 font-bebas text-5xl tracking-wider text-white lg:text-6xl">{val}</p>
+                <p className="text-xs font-black uppercase tracking-widest text-white/45">{label}</p>
               </div>
             ))}
           </div>
@@ -400,9 +402,9 @@ export default function HomePage() {
       {/* ════════════════════════════════════════
           NEWSLETTER — full width strip
       ════════════════════════════════════════ */}
-      <section className="bg-[#0a0a0a] border-t border-white/8 py-16">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+      <section className="border-t border-white/8 bg-[#0a0a0a] py-16">
+        <div className="container-shell">
+          <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(380px,520px)]">
             <div>
               <p className="label mb-2">Newsletter</p>
               <h2 className="font-bebas text-4xl lg:text-5xl text-white tracking-wider">GET EARLY ACCESS TO DROPS</h2>
@@ -443,7 +445,7 @@ function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto lg:min-w-[420px]">
+    <form onSubmit={handleSubmit} className="flex w-full flex-col gap-3 sm:flex-row">
       <input
         type="email"
         value={email}
@@ -454,7 +456,7 @@ function NewsletterForm() {
       />
       <button
         type="submit"
-        className="btn-primary px-7 py-4"
+        className="btn-primary px-7 py-4 sm:min-w-[160px]"
       >
         Subscribe →
       </button>

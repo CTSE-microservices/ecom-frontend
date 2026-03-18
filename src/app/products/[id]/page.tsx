@@ -61,7 +61,7 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="page-shell pt-[68px]">
+    <div className="page-shell">
 
       {/* ─── Breadcrumb ──────────────────────── */}
       <div className="border-b border-white/8">
@@ -79,8 +79,8 @@ export default function ProductDetailPage() {
       </div>
 
       {/* ─── Main product area ───────────────── */}
-      <div className="container-shell py-10 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+      <div className="container-shell py-8 lg:py-14">
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2 lg:gap-14">
 
           {/* Left: Images */}
           <motion.div
@@ -89,7 +89,7 @@ export default function ProductDetailPage() {
             transition={{ duration: 0.45 }}
           >
             {/* Main image */}
-            <div className="relative aspect-square rounded-2xl overflow-hidden bg-[#111] mb-4">
+            <div className="relative mb-4 aspect-square overflow-hidden rounded-3xl border border-white/10 bg-[#111]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeImage}
@@ -112,12 +112,12 @@ export default function ProductDetailPage() {
               {/* Badges */}
               <div className="absolute top-4 left-4 flex gap-2 z-10">
                 {product.isNew && (
-                  <span className="flex items-center gap-1 px-2.5 py-1 rounded bg-black text-white text-xs font-black uppercase tracking-wider">
+                  <span className="flex items-center gap-1 rounded-full bg-black px-2.5 py-1 text-xs font-black uppercase tracking-wider text-white">
                     <Sparkles className="w-3 h-3" />New
                   </span>
                 )}
                 {product.isSale && product.originalPrice && (
-                  <span className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#FF3B30] text-white text-xs font-black uppercase tracking-wider">
+                  <span className="flex items-center gap-1 rounded-full bg-[#FF3B30] px-2.5 py-1 text-xs font-black uppercase tracking-wider text-white">
                     <Tag className="w-3 h-3" />
                     -{discountPercent(product.originalPrice, product.price)}%
                   </span>
@@ -132,7 +132,7 @@ export default function ProductDetailPage() {
                   <button
                     key={i}
                     onClick={() => setActiveImage(i)}
-                    className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 ${
+                    className={`relative h-20 w-20 overflow-hidden rounded-xl border-2 transition-all duration-200 ${
                       activeImage === i ? 'border-white' : 'border-white/10 hover:border-white/30 opacity-60 hover:opacity-100'
                     }`}
                   >
@@ -148,12 +148,12 @@ export default function ProductDetailPage() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.45 }}
-            className="space-y-7"
+            className="space-y-6 rounded-3xl border border-white/10 bg-white/[0.01] p-5 lg:p-6"
           >
             {/* Category + title */}
             <div>
               <p className="label mb-2">{product.category}</p>
-              <h1 className="font-bebas text-4xl lg:text-5xl text-white tracking-wider leading-tight">
+              <h1 className="font-bebas text-4xl leading-[0.95] tracking-wider text-white lg:text-5xl">
                 {product.name.toUpperCase()}
               </h1>
             </div>
@@ -173,7 +173,7 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Price */}
-            <div className="flex items-center gap-4 py-4 border-y border-white/8">
+            <div className="flex items-center gap-4 border-y border-white/8 py-4">
               <span className="font-bebas text-4xl text-white tracking-wider">{formatPrice(product.price)}</span>
               {product.originalPrice && (
                 <span className="text-xl text-white/30 line-through">{formatPrice(product.originalPrice)}</span>
@@ -186,7 +186,7 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Description */}
-            <p className="text-white/50 leading-relaxed text-sm">{product.description}</p>
+            <p className="text-sm leading-relaxed text-white/55">{product.description}</p>
 
             {/* Quantity */}
             <div>
@@ -212,11 +212,11 @@ export default function ProductDetailPage() {
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={handleAddToCart}
-                className={`flex flex-1 items-center justify-center gap-2.5 rounded-full py-4 text-xs font-black uppercase tracking-[0.13em] transition-all duration-200 ${
+                className={`flex flex-1 items-center justify-center gap-2.5 rounded-full py-3.5 text-xs font-black uppercase tracking-[0.13em] transition-all duration-200 ${
                   added
                     ? 'bg-green-500 text-white'
                     : 'bg-[#FF3B30] text-white hover:bg-white hover:text-black'
@@ -228,7 +228,7 @@ export default function ProductDetailPage() {
               <button
                 onClick={() => setLiked((l) => !l)}
                 aria-label="Wishlist"
-                className={`p-4 rounded-full border transition-all duration-200 ${
+                className={`rounded-full border p-3.5 transition-all duration-200 ${
                   liked
                     ? 'border-[#FF3B30] bg-[#FF3B30]/10 text-[#FF3B30]'
                     : 'border-white/15 text-white/50 hover:border-white/30 hover:text-white'
@@ -240,7 +240,7 @@ export default function ProductDetailPage() {
 
             <Link
               href="/checkout"
-              className="btn-secondary block py-4 text-center"
+              className="btn-secondary block py-3.5 text-center"
             >
               Buy Now — Checkout
             </Link>
@@ -248,7 +248,7 @@ export default function ProductDetailPage() {
             {/* Guarantees */}
             <div className="grid grid-cols-3 gap-3 pt-2">
               {guarantees.map(({ icon: Icon, label }) => (
-                <div key={label} className="panel flex flex-col items-center gap-2 p-4 text-center">
+                <div key={label} className="panel flex flex-col items-center gap-2 rounded-2xl p-4 text-center">
                   <Icon className="w-4 h-4 text-[#FF3B30]" />
                   <span className="text-[10px] text-white/40 font-bold uppercase tracking-wide">{label}</span>
                 </div>

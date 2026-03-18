@@ -57,11 +57,11 @@ export default function ProductsContent() {
   const currentCat = categories.find((c) => c.id === selectedCategory);
 
   return (
-    <div className="page-shell pb-20 pt-[68px]">
+    <div className="page-shell pb-20">
 
       {/* ─── Page header ──────────────────────────────── */}
-      <div className="border-b border-white/8 bg-black/35">
-        <div className="container-shell py-10 lg:py-14">
+      <div className="border-b border-white/8 bg-black/40">
+        <div className="container-shell py-10 lg:py-12">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
             <p className="label mb-2">Catalog</p>
             <h1 className="font-bebas text-5xl lg:text-7xl text-white tracking-wider">
@@ -77,7 +77,8 @@ export default function ProductsContent() {
       <div className="container-shell mt-8">
 
         {/* ─── Search + Sort bar ──────────────────────── */}
-        <div className="mb-8 flex flex-col gap-3 lg:flex-row">
+        <div className="mb-8 rounded-3xl border border-white/12 bg-[#0f0f10]/90 p-3 shadow-[0_14px_50px_rgba(0,0,0,0.45)] backdrop-blur-sm lg:p-4">
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1.5fr)_auto] lg:items-center">
           {/* Search */}
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
@@ -87,7 +88,7 @@ export default function ProductsContent() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search products..."
-              className="input-field py-3.5 pl-11 pr-10"
+              className="input-field border-white/18 bg-white/[0.03] py-3.5 pl-11 pr-10"
             />
             {query && (
               <button onClick={() => setQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white">
@@ -96,14 +97,14 @@ export default function ProductsContent() {
             )}
           </div>
 
-          <div className="flex gap-2 lg:ml-auto">
+            <div className="flex flex-wrap gap-2 lg:ml-auto lg:flex-nowrap">
             {/* Filter toggle */}
             <button
               onClick={() => setFiltersOpen((o) => !o)}
               className={`flex items-center gap-2 rounded-full border px-5 py-3.5 text-xs font-black uppercase tracking-[0.12em] transition-all ${
                 filtersOpen
                   ? 'bg-white text-black border-white'
-                  : 'bg-transparent border-white/15 text-white/60 hover:border-white/30 hover:text-white'
+                  : 'bg-transparent border-white/20 text-white/70 hover:border-white/35 hover:text-white'
               }`}
             >
               <SlidersHorizontal className="w-4 h-4" />
@@ -116,7 +117,7 @@ export default function ProductsContent() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="input-field cursor-pointer appearance-none py-3.5 pl-5 pr-10 text-white/70"
+                className="input-field min-w-[180px] cursor-pointer appearance-none border-white/18 bg-white/[0.03] py-3.5 pl-5 pr-10 text-white/70"
               >
                 {sortOptions.map((o) => (
                   <option key={o.value} value={o.value} className="bg-black">
@@ -127,20 +128,21 @@ export default function ProductsContent() {
               <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
             </div>
           </div>
+          </div>
         </div>
 
-        <div className="flex gap-6 lg:gap-8">
+        <div className="flex gap-5 lg:gap-8">
           {/* ─── Sidebar ──────────────────────────────── */}
           <AnimatePresence>
             {filtersOpen && (
               <motion.aside
                 initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: 248 }}
+                animate={{ opacity: 1, width: 272 }}
                 exit={{ opacity: 0, width: 0 }}
                 transition={{ type: 'tween', duration: 0.22 }}
                 className="shrink-0 overflow-hidden"
               >
-                <div className="panel w-[248px] space-y-7 p-4">
+                <div className="w-[272px] space-y-7 rounded-3xl border border-white/12 bg-[#101011] p-5 shadow-[0_14px_40px_rgba(0,0,0,0.35)]">
                   {hasFilters && (
                     <button
                       onClick={clearFilters}
@@ -152,11 +154,11 @@ export default function ProductsContent() {
 
                   {/* Category */}
                   <div>
-                    <h3 className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-4">Category</h3>
+                    <h3 className="mb-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/32">Category</h3>
                     <div className="space-y-1.5">
                       <button
                         onClick={() => setSelectedCategory('')}
-                        className={`w-full rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-all ${
+                        className={`w-full rounded-2xl px-3.5 py-2.5 text-left text-sm font-semibold transition-all ${
                           !selectedCategory ? 'bg-white text-black' : 'text-white/50 hover:text-white hover:bg-white/5'
                         }`}
                       >
@@ -166,7 +168,7 @@ export default function ProductsContent() {
                         <button
                           key={cat.id}
                           onClick={() => setSelectedCategory(cat.id === selectedCategory ? '' : cat.id)}
-                          className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-all ${
+                          className={`flex w-full items-center justify-between rounded-2xl px-3.5 py-2.5 text-left text-sm font-semibold transition-all ${
                             selectedCategory === cat.id ? 'bg-white text-black' : 'text-white/50 hover:text-white hover:bg-white/5'
                           }`}
                         >
@@ -179,7 +181,7 @@ export default function ProductsContent() {
 
                   {/* Price */}
                   <div>
-                    <h3 className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-4">
+                    <h3 className="mb-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/32">
                       Max Price: ${priceRange[1].toLocaleString()}
                     </h3>
                     <input
@@ -198,13 +200,13 @@ export default function ProductsContent() {
 
                   {/* Min Rating */}
                   <div>
-                    <h3 className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-4">Min Rating</h3>
+                    <h3 className="mb-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/32">Min Rating</h3>
                     <div className="space-y-1">
                       {[0, 4, 4.5, 4.8].map((r) => (
                         <button
                           key={r}
                           onClick={() => setMinRating(r)}
-                          className={`flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-all ${
+                          className={`flex w-full items-center gap-2 rounded-2xl px-3.5 py-2.5 text-left text-sm font-semibold transition-all ${
                             minRating === r ? 'bg-white text-black' : 'text-white/50 hover:text-white hover:bg-white/5'
                           }`}
                         >

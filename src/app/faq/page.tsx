@@ -85,7 +85,7 @@ export default function FAQPage() {
     .filter((cat) => cat.items.length > 0);
 
   return (
-    <div className="page-shell pt-[68px]">
+    <div className="page-shell">
       <section className="border-b border-white/8 bg-[#090909] py-16 text-center">
         <div className="container-shell">
           <p className="label mb-2">Help</p>
