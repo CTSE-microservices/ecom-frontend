@@ -32,16 +32,16 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-black">
+    <footer className="border-t border-[#1a1a1a] bg-[#0a0a0a]">
       {/* Editorial top strip */}
-      <div className="border-b border-white/10 px-6 py-14 lg:px-10">
-        <div className="mx-auto flex max-w-[1440px] flex-col items-start justify-between gap-7 md:flex-row md:items-center">
+      <div className="border-b border-[#1a1a1a] px-6 py-20 lg:px-10">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-start justify-between gap-10 md:flex-row md:items-center">
           <div>
             <p className="label mb-2">Stay in the loop</p>
             <h2 className="section-title text-4xl lg:text-5xl">
-              JOIN THE COMMUNITY
+              Join the LuxeStore community
             </h2>
-            <p className="mt-2 max-w-md text-sm text-white/45">
+            <p className="mt-2 max-w-md text-sm text-white/55">
               Get early access to drops, exclusive deals, and style tips.
             </p>
           </div>
@@ -56,16 +56,16 @@ export default function Footer() {
       </div>
 
       {/* Main footer grid */}
-      <div className="mx-auto max-w-[1440px] px-6 py-14 lg:px-10">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
+      <div className="mx-auto max-w-[1440px] px-6 py-20 lg:px-10">
+        <div className="grid grid-cols-2 gap-12 md:grid-cols-4">
           {/* Brand col */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex items-center gap-0 mb-5 group">
-              <span className="font-bebas text-2xl tracking-widest text-white group-hover:text-[#FF3B30] transition-colors">LUXE</span>
+              <span className="font-bebas text-2xl tracking-[0.12em] text-white group-hover:text-[#E63022] transition-colors">LUXE</span>
               <span className="w-px h-5 bg-white/30 mx-2" />
-              <span className="font-bebas text-2xl tracking-widest text-[#FF3B30]">STORE</span>
+              <span className="font-bebas text-2xl tracking-[0.12em] text-[#E63022]">STORE</span>
             </Link>
-            <p className="mb-6 max-w-[220px] text-sm leading-relaxed text-white/40">
+            <p className="mb-6 max-w-[220px] text-sm leading-relaxed text-white/50">
               Premium products for those who demand quality, design, and excellence.
             </p>
             <div className="flex items-center gap-3">
@@ -74,7 +74,7 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/50 transition-all duration-200 hover:border-[#FF3B30] hover:text-[#FF3B30]"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[#2a2a2a] text-white/50 transition-all duration-200 hover:border-[#E63022] hover:text-[#E63022]"
                 >
                   <Icon className="w-3.5 h-3.5" />
                 </a>
@@ -85,8 +85,8 @@ export default function Footer() {
           {/* Link cols */}
           {Object.entries(links).map(([title, items]) => (
             <div key={title}>
-              <h4 className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-5">{title}</h4>
-              <ul className="space-y-3">
+              <h4 className="text-[12px] font-semibold text-white/45 uppercase tracking-[0.04em] mb-5">{title}</h4>
+              <ul className="space-y-4">
                 {items.map((item) => (
                   <li key={item.label}>
                     <Link
@@ -104,12 +104,12 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/8 px-6 py-6 lg:px-10">
+      <div className="border-t border-[#1a1a1a] px-6 py-6 lg:px-10">
         <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-3 sm:flex-row">
-          <p className="text-[12px] text-white/25 font-medium">© 2025 LuxeStore, Inc. All rights reserved.</p>
+          <p className="text-[12px] text-white/30 font-medium">© 2025 LuxeStore, Inc. All rights reserved.</p>
           <div className="flex items-center gap-6">
             {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((t) => (
-              <Link key={t} href="#" className="text-[12px] font-medium text-white/25 transition-colors hover:text-white/60">
+              <Link key={t} href="#" className="text-[12px] font-medium text-white/30 transition-colors hover:text-white/60">
                 {t}
               </Link>
             ))}

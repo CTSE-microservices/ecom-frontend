@@ -44,14 +44,14 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="panel overflow-hidden rounded-2xl">
+    <div className="panel overflow-hidden rounded-[4px]">
       <button
         onClick={() => setOpen((o) => !o)}
-        className={`flex w-full items-center justify-between px-5 py-4 text-left transition-colors ${open ? 'bg-[#FF3B30]/8' : 'hover:bg-white/6'}`}
+        className={`flex w-full items-center justify-between px-5 py-4 text-left transition-colors ${open ? 'bg-[#E63022]/8' : 'hover:bg-white/6'}`}
         aria-expanded={open}
       >
-        <span className={`pr-4 text-sm font-semibold ${open ? 'text-[#FF3B30]' : 'text-white'}`}>{question}</span>
-        <ChevronDown className={`h-5 w-5 shrink-0 text-white/40 transition-transform duration-300 ${open ? 'rotate-180 text-[#FF3B30]' : ''}`} />
+        <span className={`pr-4 text-sm font-semibold ${open ? 'text-[#E63022]' : 'text-white'}`}>{question}</span>
+        <ChevronDown className={`h-5 w-5 shrink-0 text-white/40 transition-transform duration-300 ${open ? 'rotate-180 text-[#E63022]' : ''}`} />
       </button>
       <AnimatePresence>
         {open && (
@@ -117,7 +117,7 @@ export default function FAQPage() {
               {filtered.map((cat) => (
                 <motion.div key={cat.category} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}>
                   <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-white">
-                    <span className="h-5 w-1.5 rounded-full bg-[#FF3B30]" />
+                    <span className="h-5 w-1.5 rounded-full bg-[#E63022]" />
                     {cat.category}
                   </h2>
                   <div className="space-y-2.5">

@@ -16,16 +16,16 @@ import { categories, getFeaturedProducts, getNewArrivals } from '@/lib/data';
 const heroSlides = [
   {
     eyebrow: 'New Season 2025',
-    headline: ['MADE TO', 'MOVE.'],
+    headline: ['Made to', 'move.'],
     sub: 'Performance meets design. Discover collections built for those who never stand still.',
     cta: 'Shop Now',
     href: '/products',
     image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1400&q=90',
-    accent: '#FF3B30',
+    accent: '#E63022',
   },
   {
     eyebrow: 'Tech Essentials',
-    headline: ['LIVE', 'SMARTER.'],
+    headline: ['Live', 'smarter.'],
     sub: 'Cutting-edge gadgets and the latest innovations for a connected lifestyle.',
     cta: 'Explore Tech',
     href: '/products?category=electronics',
@@ -34,7 +34,7 @@ const heroSlides = [
   },
   {
     eyebrow: 'Premium Sports',
-    headline: ['PUSH YOUR', 'LIMITS.'],
+    headline: ['Push your', 'limits.'],
     sub: 'Professional-grade gear engineered for athletes who demand the absolute best.',
     cta: 'Shop Sports',
     href: '/products?category=sports',
@@ -147,7 +147,7 @@ export default function HomePage() {
                       </Link>
                       <Link
                         href="/about"
-                        className="text-sm font-semibold text-white/50 hover:text-white uppercase tracking-wide transition-colors"
+                        className="text-sm font-semibold text-white/50 hover:text-white tracking-[0.02em] transition-colors"
                       >
                         Our Story →
                       </Link>
@@ -163,15 +163,15 @@ export default function HomePage() {
       {/* ════════════════════════════════════════
           PERKS BAR
       ════════════════════════════════════════ */}
-      <section className="bg-[#0d0d0d] border-y border-white/8 py-5">
+      <section className="bg-[#0d0d0d] border-y border-[#1a1a1a] py-6">
         <div className="container-shell">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {perks.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex items-center gap-3 py-1">
-                <Icon className="w-5 h-5 text-[#FF3B30] shrink-0" />
+                <Icon className="w-5 h-5 text-[#E63022] shrink-0" />
                 <div>
-                  <p className="text-sm font-black text-white leading-tight uppercase tracking-wide">{title}</p>
-                  <p className="text-[11px] text-white/35 leading-tight mt-0.5">{desc}</p>
+                  <p className="text-sm font-semibold text-white leading-tight tracking-[0.02em]">{title}</p>
+                  <p className="text-[12px] text-white/45 leading-tight mt-0.5">{desc}</p>
                 </div>
               </div>
             ))}
@@ -193,12 +193,12 @@ export default function HomePage() {
           >
             <motion.div variants={fadeUp}>
               <p className="label mb-2">Explore</p>
-              <h2 className="font-bebas text-5xl lg:text-6xl text-white tracking-wider">SHOP BY CATEGORY</h2>
+              <h2 className="font-bebas text-5xl lg:text-6xl text-white tracking-[0.02em]">Shop by category</h2>
             </motion.div>
             <motion.div variants={fadeUp}>
               <Link
                 href="/products"
-                className="hidden sm:flex items-center gap-2 text-sm font-bold text-white/40 hover:text-white uppercase tracking-wide transition-colors"
+                className="hidden sm:flex items-center gap-2 text-sm font-semibold text-white/40 hover:text-white tracking-[0.02em] transition-colors"
               >
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
@@ -218,7 +218,7 @@ export default function HomePage() {
               >
                 <Link
                   href={`/products?category=${cat.id}`}
-                  className="group relative block overflow-hidden rounded-2xl border border-white/10"
+                  className="group relative block overflow-hidden rounded-2xl border border-white/10 transition-shadow duration-300 hover:border-white/25 hover:shadow-[0_20px_50px_rgba(0,0,0,0.45)]"
                 >
                   <div className={`relative ${i < 2 ? 'aspect-[5/4]' : 'aspect-square'} overflow-hidden bg-gray-900`}>
                     <Image
@@ -233,12 +233,12 @@ export default function HomePage() {
 
                     {/* Label */}
                     <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5">
-                      <div className="inline-flex rounded-full border border-white/20 bg-black/45 px-3 py-1.5 backdrop-blur-sm">
-                        <p className="font-bebas text-2xl leading-none tracking-widest text-white">{cat.name.toUpperCase()}</p>
+                      <div className="inline-flex rounded-full border border-white/20 bg-black/60 px-3 py-1.5 backdrop-blur-sm">
+                        <p className="font-bebas text-2xl leading-none tracking-[0.04em] text-white">{cat.name}</p>
                       </div>
                       <div className="mt-2 flex translate-y-1 items-center gap-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
-                        <span className="text-xs font-bold text-[#FF3B30] uppercase tracking-wide">Shop Now</span>
-                        <ArrowRight className="w-3 h-3 text-[#FF3B30]" />
+                        <span className="text-xs font-semibold text-[#E63022] uppercase tracking-[0.04em]">Shop now</span>
+                        <ArrowRight className="w-3 h-3 text-[#E63022]" />
                       </div>
                     </div>
                   </div>
@@ -257,11 +257,11 @@ export default function HomePage() {
           <div className="flex items-end justify-between mb-10">
             <div>
               <p className="label mb-2">Handpicked</p>
-              <h2 className="font-bebas text-5xl lg:text-6xl text-white tracking-wider">FEATURED DROPS</h2>
+              <h2 className="font-bebas text-5xl lg:text-6xl text-white tracking-[0.02em]">Featured drops</h2>
             </div>
             <Link
               href="/products"
-              className="hidden sm:flex items-center gap-2 text-sm font-bold text-white/40 hover:text-white uppercase tracking-wide transition-colors"
+              className="hidden sm:flex items-center gap-2 text-sm font-semibold text-white/40 hover:text-white tracking-[0.02em] transition-colors"
             >
               All Products <ArrowRight className="w-4 h-4" />
             </Link>
@@ -292,17 +292,19 @@ export default function HomePage() {
       {/* ════════════════════════════════════════
           PROMO BANNER — editorial full-bleed
       ════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-[#FF3B30] py-24 lg:py-28">
+      <section className="relative overflow-hidden bg-[#0a0a0a] py-24 lg:py-28 border-y border-[#1a1a1a]">
         {/* Decorative large type watermark */}
         <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none">
-          <span className="font-bebas text-[clamp(8rem,20vw,18rem)] text-white/10 tracking-widest whitespace-nowrap">SALE</span>
+          <span className="font-bebas text-[clamp(8rem,20vw,18rem)] text-white/6 tracking-[0.1em] whitespace-nowrap">Sale</span>
         </div>
+
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(230,48,34,0.18),transparent_45%)]" />
 
         <div className="container-shell relative flex flex-col items-center justify-between gap-10 lg:flex-row">
           <div>
             <p className="label text-white/70 mb-3">Limited Time Offer</p>
             <h2 className="font-bebas text-[clamp(3.5rem,8vw,7rem)] text-white leading-none">
-              UP TO 50% OFF.<br />THIS WEEK ONLY.
+              Up to 50% off.<br />This week only.
             </h2>
             <p className="text-white/70 text-base mt-4 max-w-sm">
               Massive savings across all categories. Don&apos;t miss out on our biggest sale of the season.
@@ -310,7 +312,7 @@ export default function HomePage() {
           </div>
           <Link
             href="/products?sale=true"
-            className="group btn-secondary shrink-0 border-black bg-black px-10 py-5 text-white hover:border-white"
+            className="group btn-primary shrink-0 px-10 py-5"
           >
             Shop the Sale
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -327,14 +329,14 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-5 mb-12">
             <div>
               <p className="label mb-2">Discover</p>
-              <h2 className="font-bebas text-5xl lg:text-6xl text-white tracking-wider">OUR COLLECTION</h2>
+              <h2 className="font-bebas text-5xl lg:text-6xl text-white tracking-[0.02em]">Our collection</h2>
             </div>
             <div className="flex items-center gap-1 border border-white/15 rounded-full p-1">
               {(['bestsellers', 'new'] as const).map((t) => (
                 <button
                   key={t}
                   onClick={() => setActiveTab(t)}
-                  className={`rounded-full px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.12em] transition-all duration-200 ${
+                  className={`rounded-full px-5 py-2.5 text-[12px] font-semibold tracking-[0.02em] transition-all duration-200 ${
                     activeTab === t
                       ? 'bg-white text-black'
                       : 'text-white/50 hover:text-white'
@@ -377,12 +379,12 @@ export default function HomePage() {
         <div className="container-shell">
           <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-10 mb-14">
             <div>
-              <p className="label text-[#FF3B30] mb-2">Why LuxeStore</p>
-              <h2 className="font-bebas text-5xl lg:text-6xl text-white tracking-wider">TRUSTED BY THOUSANDS</h2>
+              <p className="label text-[#E63022] mb-2">Why LuxeStore</p>
+              <h2 className="font-bebas text-5xl lg:text-6xl text-white tracking-[0.02em]">Trusted by thousands</h2>
             </div>
             <div className="flex items-center gap-1">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-6 h-6 fill-[#FF3B30] stroke-[#FF3B30]" />
+                <Star key={i} className="w-6 h-6 fill-[#E63022] stroke-[#E63022]" />
               ))}
               <span className="ml-2 text-sm font-bold text-white/70">4.9 / 5 from 20,000+ reviews</span>
             </div>
@@ -390,9 +392,9 @@ export default function HomePage() {
 
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             {stats.map(({ val, label }) => (
-              <div key={label} className="panel px-8 py-12 text-center">
-                <p className="mb-1 font-bebas text-5xl tracking-wider text-white lg:text-6xl">{val}</p>
-                <p className="text-xs font-black uppercase tracking-widest text-white/45">{label}</p>
+              <div key={label} className="panel px-8 py-12 text-center border border-white/10 bg-white/[0.04] backdrop-blur-md">
+                <p className="mb-1 font-bebas text-5xl tracking-[0.04em] text-white lg:text-6xl">{val}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.04em] text-white/50">{label}</p>
               </div>
             ))}
           </div>
@@ -402,12 +404,12 @@ export default function HomePage() {
       {/* ════════════════════════════════════════
           NEWSLETTER — full width strip
       ════════════════════════════════════════ */}
-      <section className="border-t border-white/8 bg-[#0a0a0a] py-16">
+      <section className="border-t border-[#1a1a1a] bg-[#0a0a0a] py-20">
         <div className="container-shell">
           <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(380px,520px)]">
             <div>
               <p className="label mb-2">Newsletter</p>
-              <h2 className="font-bebas text-4xl lg:text-5xl text-white tracking-wider">GET EARLY ACCESS TO DROPS</h2>
+              <h2 className="font-bebas text-4xl lg:text-5xl text-white tracking-[0.02em]">Get early access to drops</h2>
               <p className="text-white/40 text-sm mt-2">No spam. Unsubscribe anytime.</p>
             </div>
             <NewsletterForm />
@@ -435,9 +437,9 @@ function NewsletterForm() {
         animate={{ opacity: 1, scale: 1 }}
         className="flex items-center gap-3 text-white"
       >
-        <div className="w-10 h-10 rounded-full bg-[#FF3B30] flex items-center justify-center text-lg font-black">✓</div>
+        <div className="w-10 h-10 rounded-full bg-[#E63022] flex items-center justify-center text-lg font-semibold">✓</div>
         <div>
-          <p className="font-black text-sm uppercase tracking-wide">You&apos;re in!</p>
+          <p className="font-semibold text-sm tracking-[0.02em]">You&apos;re in!</p>
           <p className="text-xs text-white/40 mt-0.5">Watch your inbox for exclusive drops.</p>
         </div>
       </motion.div>
@@ -445,7 +447,7 @@ function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-full flex-col gap-3 sm:flex-row">
+    <form onSubmit={handleSubmit} className="flex w-full flex-col gap-3 sm:flex-row sm:items-stretch">
       <input
         type="email"
         value={email}

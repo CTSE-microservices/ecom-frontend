@@ -26,7 +26,7 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             <Navbar />
-            <main className="min-h-screen">{children}</main>
+            <main className="min-h-screen route-fade">{children}</main>
             <Footer />
           </CartProvider>
         </AuthProvider>

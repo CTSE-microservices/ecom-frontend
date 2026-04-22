@@ -52,22 +52,22 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-black/95 border-b border-white/10 shadow-2xl shadow-black/50'
-            : 'bg-black/50 backdrop-blur-xl border-b border-white/0'
+            ? 'bg-[#0a0a0a]/96 border-b border-[#1a1a1a] shadow-2xl shadow-black/50'
+            : 'bg-black/50 backdrop-blur-xl border-b border-transparent'
         }`}
       >
         <div className="container-shell">
-          <div className="flex h-[68px] items-center justify-between gap-6 lg:h-[72px]">
+          <div className="grid h-[64px] grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 lg:h-[68px]">
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-0 group shrink-0" aria-label="LuxeStore Home">
-              <span className="font-bebas text-2xl tracking-widest text-white group-hover:text-[#FF3B30] transition-colors duration-200">LUXE</span>
+            <Link href="/" className="flex items-center gap-0 group shrink-0 justify-self-start" aria-label="LuxeStore Home">
+              <span className="font-bebas text-2xl tracking-[0.12em] text-white group-hover:text-[#E63022] transition-colors duration-200">LUXE</span>
               <span className="w-px h-5 bg-white/30 mx-2" />
-              <span className="font-bebas text-2xl tracking-widest text-[#FF3B30]">STORE</span>
+              <span className="font-bebas text-2xl tracking-[0.12em] text-[#E63022]">STORE</span>
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden flex-1 items-center justify-center lg:flex lg:gap-2">
+            <nav className="hidden items-center justify-center justify-self-center lg:flex lg:gap-2">
               {navLinks.map((link) =>
                 link.children ? (
                   <div
@@ -77,8 +77,8 @@ export default function Navbar() {
                     onMouseLeave={() => setCollectionsOpen(false)}
                   >
                     <button
-                      className={`flex items-center gap-1 rounded-full px-4 py-2 text-[11px] font-black uppercase tracking-[0.1em] transition-colors duration-150 ${
-                        collectionsOpen ? 'text-white' : 'text-white/68 hover:text-white'
+                      className={`flex items-center gap-1 rounded-full px-4 py-2 text-[13px] font-semibold tracking-[0.02em] transition-colors duration-150 ${
+                        collectionsOpen ? 'text-white' : 'text-white/70 hover:text-white'
                       }`}
                     >
                       {link.label}
@@ -91,13 +91,13 @@ export default function Navbar() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 8 }}
                           transition={{ duration: 0.18 }}
-                          className="absolute top-full left-1/2 mt-3 w-56 -translate-x-1/2 overflow-hidden rounded-2xl border border-white/12 bg-[#0f0f10] shadow-2xl shadow-black/55"
+                          className="absolute top-full left-1/2 mt-3 w-56 -translate-x-1/2 overflow-hidden rounded-xl border border-[#2a2a2a] bg-[#0f0f10] shadow-2xl shadow-black/55"
                         >
                           {link.children.map((child) => (
                             <Link
                               key={child.href}
                               href={child.href}
-                              className="block border-b border-white/8 px-5 py-3 text-[11px] font-black uppercase tracking-[0.12em] text-white/72 transition-colors hover:bg-white/6 hover:text-white last:border-0"
+                              className="block border-b border-white/8 px-5 py-3 text-[12px] font-medium tracking-[0.02em] text-white/70 transition-colors hover:bg-white/6 hover:text-white last:border-0"
                             >
                               {child.label}
                             </Link>
@@ -110,15 +110,15 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href!}
-                    className={`relative rounded-full px-5 py-2 text-[11px] font-black uppercase tracking-[0.1em] transition-colors duration-150 ${
+                    className={`relative rounded-full px-5 py-2 text-[13px] font-semibold tracking-[0.02em] transition-colors duration-150 ${
                       (link.href === '/products' ? isProductsRoute : pathname === link.href)
                         ? 'text-white'
-                        : 'text-white/62 hover:text-white'
+                        : 'text-white/70 hover:text-white'
                     }`}
                   >
                     {link.label}
                     {(link.href === '/products' ? isProductsRoute : pathname === link.href) && (
-                      <span className="absolute inset-x-3 -bottom-0.5 h-[2px] rounded-full bg-[#FF3B30]" />
+                      <span className="absolute inset-x-3 -bottom-0.5 h-[2px] rounded-full bg-[#E63022]" />
                     )}
                   </Link>
                 )
@@ -126,7 +126,7 @@ export default function Navbar() {
             </nav>
 
             {/* Right Actions */}
-            <div className="flex shrink-0 items-center gap-1.5 lg:gap-2">
+            <div className="flex items-center justify-end justify-self-end gap-1.5 lg:gap-2">
               {/* Search */}
               <Link
                 href="/products"
@@ -150,7 +150,7 @@ export default function Navbar() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       exit={{ scale: 0 }}
-                      className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#FF3B30] text-white text-[9px] font-black flex items-center justify-center"
+                      className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#E63022] text-white text-[8px] font-semibold flex items-center justify-center"
                     >
                       {totalItems > 9 ? '9+' : totalItems}
                     </motion.span>
@@ -165,7 +165,7 @@ export default function Navbar() {
                     onClick={() => setUserMenuOpen((o) => !o)}
                     className="flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors hover:bg-white/8"
                   >
-                    <div className="w-7 h-7 rounded-full bg-[#FF3B30] flex items-center justify-center text-white text-xs font-black font-bebas tracking-wide">
+                    <div className="w-7 h-7 rounded-full bg-[#E63022] flex items-center justify-center text-white text-xs font-semibold tracking-wide">
                       {user.name.charAt(0)}
                     </div>
                     <ChevronDown className={`w-3 h-3 text-white/40 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
@@ -177,7 +177,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 8 }}
                         transition={{ duration: 0.16 }}
-                        className="absolute right-0 top-full mt-2 w-48 rounded-2xl border border-white/12 bg-[#0f0f10] py-1 shadow-2xl"
+                        className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-[#2a2a2a] bg-[#0f0f10] py-1 shadow-2xl"
                       >
                         <div className="border-b border-white/10 px-4 py-3">
                           <p className="truncate text-xs font-bold text-white">{user.name}</p>
@@ -195,10 +195,10 @@ export default function Navbar() {
                   </AnimatePresence>
                 </div>
               ) : (
-                <div className="ml-2 hidden items-center gap-1.5 border-l border-white/12 pl-2 lg:flex">
+                <div className="ml-1 hidden items-center gap-1.5 lg:flex">
                   <button
                     onClick={openLogin}
-                    className="rounded-full px-4 py-2 text-[11px] font-black uppercase tracking-[0.1em] text-white/70 transition-colors hover:bg-white/8 hover:text-white"
+                    className="rounded-full px-4 py-2 text-[13px] font-semibold tracking-[0.02em] text-white/70 transition-colors hover:bg-white/8 hover:text-white"
                   >
                     Login
                   </button>
@@ -240,10 +240,10 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'tween', duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
-              className="fixed top-0 right-0 bottom-0 z-50 w-80 bg-black border-l border-white/10 flex flex-col lg:hidden"
+              className="fixed top-0 right-0 bottom-0 z-50 w-80 bg-black border-l border-[#1a1a1a] flex flex-col lg:hidden"
             >
               <div className="flex items-center justify-between px-6 h-16 border-b border-white/10">
-                <span className="font-bebas text-xl tracking-widest text-white">MENU</span>
+                <span className="font-bebas text-xl tracking-[0.12em] text-white">Menu</span>
                 <button onClick={() => setMobileOpen(false)} className="p-2 text-white/60 hover:text-white">
                   <X className="w-5 h-5" />
                 </button>
@@ -253,14 +253,14 @@ export default function Navbar() {
                 {navLinks.map((link, idx) =>
                   link.children ? (
                     <div key={link.label}>
-                      <p className="px-3 pt-4 pb-2 text-[10px] font-black text-[#FF3B30] uppercase tracking-widest">
+                      <p className="px-3 pt-4 pb-2 text-[10px] font-semibold text-[#E63022] uppercase tracking-[0.04em]">
                         {link.label}
                       </p>
                       {link.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block px-3 py-2.5 text-sm font-semibold text-white/70 hover:text-white uppercase tracking-wide transition-colors"
+                          className="block px-3 py-2.5 text-sm font-medium text-white/70 hover:text-white tracking-[0.02em] transition-colors"
                         >
                           {child.label}
                         </Link>
@@ -275,8 +275,8 @@ export default function Navbar() {
                     >
                       <Link
                         href={link.href!}
-                        className={`block px-3 py-3 text-base font-black uppercase tracking-wide transition-colors ${
-                          pathname === link.href ? 'text-[#FF3B30]' : 'text-white/80 hover:text-white'
+                        className={`block px-3 py-3 text-base font-semibold tracking-[0.02em] transition-colors ${
+                          pathname === link.href ? 'text-[#E63022]' : 'text-white/80 hover:text-white'
                         }`}
                       >
                         {link.label}
@@ -290,7 +290,7 @@ export default function Navbar() {
                 {user ? (
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-[#FF3B30] flex items-center justify-center text-white font-black font-bebas text-lg">
+                      <div className="w-9 h-9 rounded-full bg-[#E63022] flex items-center justify-center text-white font-semibold text-lg">
                         {user.name.charAt(0)}
                       </div>
                       <div>
@@ -307,7 +307,7 @@ export default function Navbar() {
                   </div>
                 ) : (
                   <>
-                    <button onClick={openLogin} className="w-full py-3 rounded-full border border-white/20 text-sm font-black uppercase tracking-wide text-white hover:bg-white hover:text-black transition-all duration-200">
+                    <button onClick={openLogin} className="w-full py-3 rounded-full border border-white/20 text-sm font-semibold tracking-[0.02em] text-white hover:bg-white hover:text-black transition-all duration-200">
                       Login
                     </button>
                     <button onClick={openSignup} className="btn-primary w-full">

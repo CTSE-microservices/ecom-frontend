@@ -55,6 +55,7 @@ export default function ProductsContent() {
 
   const hasFilters = query || selectedCategory || priceRange[1] < 5000 || minRating > 0 || saleOnly;
   const currentCat = categories.find((c) => c.id === selectedCategory);
+  const rangeStyle = { '--value': `${(priceRange[1] / 5000) * 100}%` } as React.CSSProperties;
 
   return (
     <div className="page-shell pb-20">
@@ -64,8 +65,8 @@ export default function ProductsContent() {
         <div className="container-shell py-10 lg:py-12">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
             <p className="label mb-2">Catalog</p>
-            <h1 className="font-bebas text-5xl lg:text-7xl text-white tracking-wider">
-              {currentCat ? currentCat.name.toUpperCase() : 'ALL PRODUCTS'}
+            <h1 className="font-bebas text-5xl lg:text-7xl text-white tracking-[0.02em]">
+              {currentCat ? currentCat.name : 'All products'}
             </h1>
             <p className="text-white/35 text-sm mt-2 font-medium">
               {filtered.length} product{filtered.length !== 1 ? 's' : ''} found
@@ -77,76 +78,102 @@ export default function ProductsContent() {
       <div className="container-shell mt-8">
 
         {/* ─── Search + Sort bar ──────────────────────── */}
-        <div className="mb-8 rounded-3xl border border-white/12 bg-[#0f0f10]/90 p-3 shadow-[0_14px_50px_rgba(0,0,0,0.45)] backdrop-blur-sm lg:p-4">
-          <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1.5fr)_auto] lg:items-center">
-          {/* Search */}
-          <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
-            <input
-              id="search-products"
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search products..."
-              className="input-field border-white/18 bg-white/[0.03] py-3.5 pl-11 pr-10"
-            />
-            {query && (
-              <button onClick={() => setQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white">
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
+        <div className="mb-8 rounded-[4px] border border-[#2a2a2a] bg-[#0f0f10]/90 p-3 shadow-[0_14px_50px_rgba(0,0,0,0.45)] backdrop-blur-sm lg:p-4">
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-4">
+            {/* Search */}
+            <div className="relative flex-1">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+              <input
+                id="search-products"
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search products..."
+                className="input-field border-[#2a2a2a] bg-white/[0.03] py-3 pl-11 pr-10"
+              />
+              {query && (
+                <button onClick={() => setQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white">
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
 
-            <div className="flex flex-wrap gap-2 lg:ml-auto lg:flex-nowrap">
-            {/* Filter toggle */}
-            <button
-              onClick={() => setFiltersOpen((o) => !o)}
-              className={`flex items-center gap-2 rounded-full border px-5 py-3.5 text-xs font-black uppercase tracking-[0.12em] transition-all ${
-                filtersOpen
-                  ? 'bg-white text-black border-white'
-                  : 'bg-transparent border-white/20 text-white/70 hover:border-white/35 hover:text-white'
-              }`}
-            >
-              <SlidersHorizontal className="w-4 h-4" />
-              Filters
-              {hasFilters && <span className="w-2 h-2 rounded-full bg-[#FF3B30]" />}
-            </button>
-
-            {/* Sort */}
-            <div className="relative">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="input-field min-w-[180px] cursor-pointer appearance-none border-white/18 bg-white/[0.03] py-3.5 pl-5 pr-10 text-white/70"
+            <div className="flex flex-wrap items-center gap-2 lg:ml-auto lg:flex-nowrap">
+              {/* Filter toggle */}
+              <button
+                onClick={() => setFiltersOpen((o) => !o)}
+                className={`flex items-center gap-2 rounded-full border px-4 py-3 text-xs font-semibold uppercase tracking-[0.04em] transition-all ${
+                  filtersOpen
+                    ? 'bg-white text-black border-white'
+                    : 'bg-transparent border-[#2a2a2a] text-white/70 hover:border-white/40 hover:text-white'
+                }`}
               >
-                {sortOptions.map((o) => (
-                  <option key={o.value} value={o.value} className="bg-black">
-                    {o.label}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
+                <SlidersHorizontal className="w-4 h-4" />
+                Filters
+                {hasFilters && <span className="w-2 h-2 rounded-full bg-[#E63022]" />}
+              </button>
+
+              {/* Sort */}
+              <div className="relative">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="input-field min-w-[180px] cursor-pointer appearance-none border-[#2a2a2a] bg-white/[0.03] py-3 pl-5 pr-10 text-white/70"
+                >
+                  {sortOptions.map((o) => (
+                    <option key={o.value} value={o.value} className="bg-black">
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
+              </div>
             </div>
           </div>
+
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id === selectedCategory ? '' : cat.id)}
+                className={`rounded-full border px-3 py-1.5 text-[12px] font-medium transition-all ${
+                  selectedCategory === cat.id
+                    ? 'border-white bg-white text-black'
+                    : 'border-[#2a2a2a] text-white/60 hover:text-white hover:border-white/40'
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+            <button
+              onClick={() => setSaleOnly((o) => !o)}
+              className={`rounded-full border px-3 py-1.5 text-[12px] font-medium transition-all ${
+                saleOnly
+                  ? 'border-[#E63022] text-white bg-[#E63022]/20'
+                  : 'border-[#2a2a2a] text-white/60 hover:text-white hover:border-white/40'
+              }`}
+            >
+              Sale
+            </button>
           </div>
         </div>
 
-        <div className="flex gap-5 lg:gap-8">
+        <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
           {/* ─── Sidebar ──────────────────────────────── */}
           <AnimatePresence>
             {filtersOpen && (
               <motion.aside
-                initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: 272 }}
-                exit={{ opacity: 0, width: 0 }}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
                 transition={{ type: 'tween', duration: 0.22 }}
-                className="shrink-0 overflow-hidden"
+                className="shrink-0 overflow-hidden w-full lg:w-[272px]"
               >
-                <div className="w-[272px] space-y-7 rounded-3xl border border-white/12 bg-[#0f0f10] p-5 shadow-[0_14px_40px_rgba(0,0,0,0.35)]">
+                <div className="w-full space-y-7 rounded-[4px] border border-[#2a2a2a] bg-[#0f0f10] p-5 shadow-[0_14px_40px_rgba(0,0,0,0.35)]">
                   {hasFilters && (
                     <button
                       onClick={clearFilters}
-                      className="flex items-center gap-1.5 text-xs font-black text-[#FF3B30] uppercase tracking-wide"
+                      className="flex items-center gap-1.5 text-xs font-semibold text-[#E63022] uppercase tracking-[0.04em]"
                     >
                       <X className="w-3 h-3" /> Clear Filters
                     </button>
@@ -154,12 +181,12 @@ export default function ProductsContent() {
 
                   {/* Category */}
                   <div>
-                    <h3 className="mb-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/32">Category</h3>
+                    <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.04em] text-white/40">Category</h3>
                     <div className="space-y-1.5">
                       <button
                         onClick={() => setSelectedCategory('')}
-                        className={`w-full rounded-2xl px-3.5 py-2.5 text-left text-sm font-semibold transition-all ${
-                          !selectedCategory ? 'bg-white text-black' : 'text-white/50 hover:text-white hover:bg-white/5'
+                        className={`w-full rounded-xl px-3.5 py-2.5 text-left text-sm font-medium transition-all ${
+                          !selectedCategory ? 'bg-white text-black' : 'text-white/55 hover:text-white hover:bg-white/5'
                         }`}
                       >
                         All Categories
@@ -168,8 +195,8 @@ export default function ProductsContent() {
                         <button
                           key={cat.id}
                           onClick={() => setSelectedCategory(cat.id === selectedCategory ? '' : cat.id)}
-                          className={`flex w-full items-center justify-between rounded-2xl px-3.5 py-2.5 text-left text-sm font-semibold transition-all ${
-                            selectedCategory === cat.id ? 'bg-white text-black' : 'text-white/50 hover:text-white hover:bg-white/5'
+                          className={`flex w-full items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-sm font-medium transition-all ${
+                            selectedCategory === cat.id ? 'bg-white text-black' : 'text-white/55 hover:text-white hover:bg-white/5'
                           }`}
                         >
                           {cat.name}
@@ -181,7 +208,7 @@ export default function ProductsContent() {
 
                   {/* Price */}
                   <div>
-                    <h3 className="mb-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/32">
+                    <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.04em] text-white/40">
                       Max Price: ${priceRange[1].toLocaleString()}
                     </h3>
                     <input
@@ -194,7 +221,7 @@ export default function ProductsContent() {
                         const val = Number(e.target.value);
                         setPriceRange([0, val]);
                       }}
-                      style={{ '--value': `${(priceRange[1] / 5000) * 100}%` } as React.CSSProperties}
+                      style={rangeStyle}
                       className="w-full cursor-pointer"
                     />
                     <div className="flex justify-between text-xs text-white/25 mt-1 font-medium">
@@ -204,18 +231,18 @@ export default function ProductsContent() {
 
                   {/* Min Rating */}
                   <div>
-                    <h3 className="mb-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/32">Min Rating</h3>
+                    <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.04em] text-white/40">Min Rating</h3>
                     <div className="space-y-1">
                       {[0, 4, 4.5, 4.8].map((r) => (
                         <button
                           key={r}
                           onClick={() => setMinRating(r)}
-                          className={`flex w-full items-center gap-2 rounded-2xl px-3.5 py-2.5 text-left text-sm font-semibold transition-all ${
-                            minRating === r ? 'bg-white text-black' : 'text-white/50 hover:text-white hover:bg-white/5'
+                          className={`flex w-full items-center gap-2 rounded-xl px-3.5 py-2.5 text-left text-sm font-medium transition-all ${
+                            minRating === r ? 'bg-white text-black' : 'text-white/55 hover:text-white hover:bg-white/5'
                           }`}
                         >
                           {r === 0 ? 'All ratings' : (
-                            <><Star className="w-3 h-3 fill-[#FF3B30] stroke-[#FF3B30]" />{r}+</>
+                            <><Star className="w-3 h-3 fill-[#E63022] stroke-[#E63022]" />{r}+</>
                           )}
                         </button>
                       ))}
@@ -228,7 +255,7 @@ export default function ProductsContent() {
                       <div
                         onClick={() => setSaleOnly((o) => !o)}
                         className={`w-10 h-5 rounded-full border transition-all relative cursor-pointer ${
-                          saleOnly ? 'bg-[#FF3B30] border-[#FF3B30]' : 'bg-white/8 border-white/15'
+                          saleOnly ? 'bg-[#E63022] border-[#E63022]' : 'bg-white/8 border-[#2a2a2a]'
                         }`}
                       >
                         <span className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${saleOnly ? 'translate-x-5' : ''}`} />

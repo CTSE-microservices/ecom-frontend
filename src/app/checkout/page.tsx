@@ -22,7 +22,7 @@ function StepIndicator({ current }: { current: number }) {
                 i < current
                   ? 'bg-white text-black'
                   : i === current
-                    ? 'bg-[#FF3B30] text-white'
+                    ? 'bg-[#E63022] text-white'
                     : 'bg-white/6 text-white/45'
               }`}
             >
@@ -162,7 +162,7 @@ function ReviewStep({ shipping, onBack, onComplete }: { shipping: { name: string
 
       <div className="panel space-y-2 p-4">
         <div className="flex justify-between text-sm"><span className="text-white/45">Subtotal</span><span className="text-white">{formatPrice(totalPrice)}</span></div>
-        <div className="flex justify-between text-sm"><span className="text-white/45">Shipping</span><span className={shippingCost === 0 ? 'font-black text-[#FF3B30] text-xs uppercase tracking-wide' : 'text-white'}>{shippingCost === 0 ? 'FREE' : formatPrice(shippingCost)}</span></div>
+        <div className="flex justify-between text-sm"><span className="text-white/45">Shipping</span><span className={shippingCost === 0 ? 'font-semibold text-[#E63022] text-xs uppercase tracking-[0.04em]' : 'text-white'}>{shippingCost === 0 ? 'Free' : formatPrice(shippingCost)}</span></div>
         <div className="flex justify-between text-sm"><span className="text-white/45">Tax</span><span className="text-white">{formatPrice(tax)}</span></div>
         <hr className="my-2 border-white/10" />
         <div className="flex justify-between"><span className="text-sm font-semibold text-white">Total</span><span className="text-xl font-black text-white">{formatPrice(total)}</span></div>
@@ -205,10 +205,10 @@ export default function CheckoutPage() {
     return (
       <div className="page-shell flex min-h-screen flex-col items-center justify-center px-4 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl border border-[#FF3B30]/25 bg-[#FF3B30]/10">
-            <Lock className="h-8 w-8 text-[#FF3B30]" />
+          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl border border-[#E63022]/25 bg-[#E63022]/10">
+                <Lock className="h-8 w-8 text-[#E63022]" />
           </div>
-          <h1 className="section-title text-4xl">Sign In To Checkout</h1>
+          <h1 className="section-title text-4xl">Sign in to checkout</h1>
           <p className="mx-auto mt-3 max-w-sm text-sm text-white/50">Create an account or sign in to complete your purchase securely.</p>
           <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row">
             <button onClick={() => setAuthModalOpen(true)} className="btn-primary px-8 py-3.5">
@@ -233,7 +233,7 @@ export default function CheckoutPage() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', delay: 0.2 }}
-            className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#FF3B30] shadow-2xl shadow-[#FF3B30]/30"
+            className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#E63022] shadow-2xl shadow-[#E63022]/30"
           >
             <Check className="h-10 w-10 text-white" />
           </motion.div>
@@ -262,7 +262,7 @@ export default function CheckoutPage() {
 
         <StepIndicator current={step} />
 
-        <div className="panel rounded-3xl p-5 sm:p-6">
+            <div className="panel rounded-[4px] p-5 sm:p-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={step}

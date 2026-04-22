@@ -40,11 +40,11 @@ export default function ProductDetailPage() {
     return (
       <div className="min-h-screen bg-black pt-32 flex flex-col items-center justify-center text-center px-6">
         <p className="font-bebas text-8xl text-white/10 tracking-widest mb-4">404</p>
-        <h1 className="font-bebas text-3xl text-white tracking-wider mb-2">PRODUCT NOT FOUND</h1>
+        <h1 className="font-bebas text-3xl text-white tracking-[0.02em] mb-2">Product not found</h1>
         <p className="text-white/40 text-sm mb-8">The product you&apos;re looking for doesn&apos;t exist.</p>
         <Link
           href="/products"
-          className="px-8 py-3.5 rounded-full bg-[#FF3B30] text-white text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-200"
+          className="btn-primary px-8 py-3.5"
         >
           Browse Products
         </Link>
@@ -89,7 +89,7 @@ export default function ProductDetailPage() {
             transition={{ duration: 0.45 }}
           >
             {/* Main image */}
-            <div className="relative mb-4 aspect-square overflow-hidden rounded-3xl border border-white/10 bg-[#111]">
+            <div className="relative mb-4 aspect-square overflow-hidden rounded-[4px] border border-white/10 bg-[#111]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeImage}
@@ -112,12 +112,12 @@ export default function ProductDetailPage() {
               {/* Badges */}
               <div className="absolute top-4 left-4 flex gap-2 z-10">
                 {product.isNew && (
-                  <span className="flex items-center gap-1 rounded-full bg-black px-2.5 py-1 text-xs font-black uppercase tracking-wider text-white">
+                  <span className="flex items-center gap-1 rounded-full bg-black/80 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-white font-mono">
                     <Sparkles className="w-3 h-3" />New
                   </span>
                 )}
                 {product.isSale && product.originalPrice && (
-                  <span className="flex items-center gap-1 rounded-full bg-[#FF3B30] px-2.5 py-1 text-xs font-black uppercase tracking-wider text-white">
+                  <span className="flex items-center gap-1 rounded-full bg-[#E63022] px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-white font-mono">
                     <Tag className="w-3 h-3" />
                     -{discountPercent(product.originalPrice, product.price)}%
                   </span>
@@ -132,7 +132,7 @@ export default function ProductDetailPage() {
                   <button
                     key={i}
                     onClick={() => setActiveImage(i)}
-                    className={`relative h-20 w-20 overflow-hidden rounded-xl border-2 transition-all duration-200 ${
+                    className={`relative h-20 w-20 overflow-hidden rounded-[4px] border-2 transition-all duration-200 ${
                       activeImage === i ? 'border-white' : 'border-white/10 hover:border-white/30 opacity-60 hover:opacity-100'
                     }`}
                   >
@@ -148,13 +148,13 @@ export default function ProductDetailPage() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.45 }}
-            className="space-y-6 rounded-3xl border border-white/10 bg-white/[0.01] p-5 lg:p-6"
+            className="space-y-6 lg:pl-2"
           >
             {/* Category + title */}
             <div>
               <p className="label mb-2">{product.category}</p>
-              <h1 className="font-bebas text-4xl leading-[0.95] tracking-wider text-white lg:text-5xl">
-                {product.name.toUpperCase()}
+              <h1 className="font-bebas text-4xl leading-[1.02] tracking-[0.02em] text-white lg:text-5xl">
+                {product.name}
               </h1>
             </div>
 
@@ -164,33 +164,33 @@ export default function ProductDetailPage() {
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`w-4 h-4 ${i < Math.round(product.rating) ? 'fill-[#FF3B30] stroke-[#FF3B30]' : 'stroke-white/20 fill-transparent'}`}
+                    className={`w-4 h-4 ${i < Math.round(product.rating) ? 'fill-[#E63022] stroke-[#E63022]' : 'stroke-white/20 fill-transparent'}`}
                   />
                 ))}
               </div>
-              <span className="text-sm font-black text-white">{product.rating}</span>
+              <span className="text-sm font-semibold text-white">{product.rating}</span>
               <span className="text-sm text-white/35">({product.reviews.toLocaleString()} reviews)</span>
             </div>
 
             {/* Price */}
             <div className="flex items-center gap-4 border-y border-white/8 py-4">
-              <span className="font-bebas text-4xl text-white tracking-wider">{formatPrice(product.price)}</span>
+              <span className="font-bebas text-4xl text-white tracking-[0.02em]">{formatPrice(product.price)}</span>
               {product.originalPrice && (
                 <span className="text-xl text-white/30 line-through">{formatPrice(product.originalPrice)}</span>
               )}
               {product.originalPrice && (
-                <span className="px-3 py-1 rounded-full bg-[#FF3B30]/15 text-[#FF3B30] text-xs font-black uppercase tracking-wide border border-[#FF3B30]/25">
+                <span className="px-3 py-1 rounded-full bg-[#E63022]/15 text-[#E63022] text-xs font-semibold uppercase tracking-[0.04em] border border-[#E63022]/25">
                   Save {formatPrice(product.originalPrice - product.price)}
                 </span>
               )}
             </div>
 
             {/* Description */}
-            <p className="text-sm leading-relaxed text-white/55">{product.description}</p>
+            <p className="text-sm leading-relaxed text-white/60">{product.description}</p>
 
             {/* Quantity */}
             <div>
-              <p className="text-xs font-black text-white/30 uppercase tracking-[0.18em] mb-3">Quantity</p>
+              <p className="text-xs font-semibold text-white/35 uppercase tracking-[0.04em] mb-3">Quantity</p>
               <div className="flex items-center gap-4">
                 <div className="flex items-center border border-white/15 rounded-full overflow-hidden">
                   <button
@@ -199,7 +199,7 @@ export default function ProductDetailPage() {
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="w-12 text-center text-white font-black font-bebas text-xl tracking-wider">{quantity}</span>
+                  <span className="w-12 text-center text-white font-semibold text-lg">{quantity}</span>
                   <button
                     onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
                     className="w-11 h-11 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/5 transition-all"
@@ -216,25 +216,23 @@ export default function ProductDetailPage() {
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={handleAddToCart}
-                className={`flex flex-1 items-center justify-center gap-2.5 rounded-full py-3.5 text-xs font-black uppercase tracking-[0.13em] transition-all duration-200 border ${
-                  added
-                    ? 'border-white/20 bg-black text-white'
-                    : 'border-[#FF3B30] bg-[#FF3B30] text-white hover:bg-white hover:text-black hover:border-white'
+                className={`btn-primary flex-1 justify-center py-3.5 ${
+                  added ? 'bg-white text-black border-white' : ''
                 }`}
               >
                 {added ? <Check className="w-5 h-5" /> : <ShoppingBag className="w-5 h-5" />}
-                {added ? 'Added to Bag!' : 'Add to Bag'}
+                {added ? 'Added to bag' : 'Add to bag'}
               </motion.button>
               <button
                 onClick={() => setLiked((l) => !l)}
                 aria-label="Wishlist"
                 className={`rounded-full border p-3.5 transition-all duration-200 ${
                   liked
-                    ? 'border-[#FF3B30] bg-[#FF3B30]/10 text-[#FF3B30]'
+                    ? 'border-[#E63022] bg-[#E63022]/10 text-[#E63022]'
                     : 'border-white/15 text-white/50 hover:border-white/30 hover:text-white'
                 }`}
               >
-                <Heart className={`w-5 h-5 transition-all ${liked ? 'fill-[#FF3B30]' : ''}`} />
+                <Heart className={`w-5 h-5 transition-all ${liked ? 'fill-[#E63022]' : ''}`} />
               </button>
             </div>
 
@@ -248,9 +246,9 @@ export default function ProductDetailPage() {
             {/* Guarantees */}
             <div className="grid grid-cols-3 gap-3 pt-2">
               {guarantees.map(({ icon: Icon, label }) => (
-                <div key={label} className="panel flex flex-col items-center gap-2 rounded-2xl p-4 text-center">
-                  <Icon className="w-4 h-4 text-[#FF3B30]" />
-                  <span className="text-[10px] text-white/40 font-bold uppercase tracking-wide">{label}</span>
+                <div key={label} className="panel flex flex-col items-center gap-2 rounded-[4px] p-4 text-center">
+                  <Icon className="w-4 h-4 text-white/70" />
+                  <span className="text-[10px] text-white/45 font-semibold uppercase tracking-[0.04em]">{label}</span>
                 </div>
               ))}
             </div>
@@ -264,10 +262,10 @@ export default function ProductDetailPage() {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-6 py-4 text-sm font-black uppercase tracking-wide border-b-2 transition-all -mb-px ${
+                className={`px-6 py-4 text-sm font-semibold tracking-[0.02em] border-b-2 transition-all -mb-px ${
                   activeTab === tab
-                    ? 'border-[#FF3B30] text-white'
-                    : 'border-transparent text-white/30 hover:text-white/60'
+                    ? 'border-[#E63022] text-white'
+                    : 'border-transparent text-white/35 hover:text-white/70'
                 }`}
               >
                 {tab}
@@ -289,8 +287,8 @@ export default function ProductDetailPage() {
                   <ul className="mt-6 space-y-3">
                     {['Premium quality materials', 'Carefully crafted for longevity', 'Backed by our quality guarantee', '30-day hassle-free returns'].map((item) => (
                       <li key={item} className="flex items-center gap-3 text-sm text-white/50">
-                        <span className="w-5 h-5 rounded-full bg-[#FF3B30]/15 border border-[#FF3B30]/30 flex items-center justify-center shrink-0">
-                          <Check className="w-3 h-3 text-[#FF3B30]" />
+                        <span className="w-5 h-5 rounded-full bg-[#E63022]/15 border border-[#E63022]/30 flex items-center justify-center shrink-0">
+                          <Check className="w-3 h-3 text-[#E63022]" />
                         </span>
                         {item}
                       </li>
@@ -317,19 +315,19 @@ export default function ProductDetailPage() {
                     { name: 'James K.', rating: 4, text: 'Great value for money. Fast shipping and well-packaged. Would definitely recommend.', date: '1 week ago' },
                     { name: 'Emily R.', rating: 5, text: "Best purchase I've made this year. The attention to detail is remarkable.", date: '2 weeks ago' },
                   ].map((review, i) => {
-                    const avatarBg = i === 0 ? 'bg-[#FF3B30]' : i === 1 ? 'bg-white/[0.12] border border-white/15' : 'bg-[#FF3B30]/55';
+                    const avatarBg = i === 0 ? 'bg-[#E63022]' : i === 1 ? 'bg-white/[0.12] border border-white/15' : 'bg-[#E63022]/55';
                     return (
                     <div key={i} className="panel p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
-                          <div className={`w-10 h-10 rounded-full ${avatarBg} flex items-center justify-center text-white text-sm font-black font-bebas text-xl tracking-wider`}>
+                          <div className={`w-10 h-10 rounded-full ${avatarBg} flex items-center justify-center text-white text-sm font-semibold text-lg`}>
                             {review.name[0]}
                           </div>
                           <div>
-                            <p className="text-sm font-black text-white">{review.name}</p>
+                            <p className="text-sm font-semibold text-white">{review.name}</p>
                             <div className="flex items-center gap-0.5 mt-0.5">
                               {[...Array(5)].map((_, j) => (
-                                <Star key={j} className={`w-3 h-3 ${j < review.rating ? 'fill-[#FF3B30] stroke-[#FF3B30]' : 'stroke-white/20 fill-transparent'}`} />
+                                <Star key={j} className={`w-3 h-3 ${j < review.rating ? 'fill-[#E63022] stroke-[#E63022]' : 'stroke-white/20 fill-transparent'}`} />
                               ))}
                             </div>
                           </div>
@@ -351,7 +349,7 @@ export default function ProductDetailPage() {
             <div className="flex items-end justify-between mb-8">
               <div>
                 <p className="label mb-2">Related</p>
-                <h2 className="font-bebas text-4xl text-white tracking-wider">YOU MIGHT ALSO LIKE</h2>
+                <h2 className="font-bebas text-4xl text-white tracking-[0.02em]">You might also like</h2>
               </div>
             </div>
             <Swiper
