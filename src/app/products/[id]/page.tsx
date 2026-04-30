@@ -55,7 +55,14 @@ export default function ProductDetailPage() {
   const related = getRelatedProducts(product);
 
   const handleAddToCart = () => {
-    addItem(product, quantity);
+    addItem({
+      productId: product.id,
+      name: product.name,
+      price: product.price,
+      quantity,
+      image: product.image,
+      category: product.category,
+    });
     setAdded(true);
     setTimeout(() => setAdded(false), 2200);
   };

@@ -9,7 +9,7 @@ import { useCart } from '@/context/CartContext';
 import { formatPrice } from '@/lib/utils';
 
 export default function CartPage() {
-  const { items, removeItem, updateQuantity, totalPrice, totalItems, clearCart } = useCart();
+  const { items, removeItem, updateItem, totalPrice, totalItems, clearCart } = useCart();
 
   const tax      = totalPrice * 0.10;
   const shipping = totalPrice >= 50 ? 0 : 8.99;
@@ -71,7 +71,7 @@ export default function CartPage() {
             <AnimatePresence>
               {items.map((item, i) => (
                 <motion.div
-                  key={item.product.id}
+                  key={item.id}
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: -30, height: 0, marginBottom: 0 }}
@@ -79,9 +79,9 @@ export default function CartPage() {
                   className="panel flex gap-5 rounded-[4px] p-5 transition-colors hover:border-white/20"
                 >
                   {/* Image */}
-                  <Link href={`/products/${item.product.id}`} className="shrink-0">
+                  <Link href={`/products/${item.productId}`} className="shrink-0">
                     <div className="relative w-24 h-24 rounded-xl overflow-hidden bg-[#111]">
-                      <Image src={item.product.image} alt={item.product.name} fill className="object-cover" />
+                      <Image src={item.image ?? '/file.svg'} alt={item.name} fill className="object-cover" />
                     </div>
                   </Link>
 
@@ -89,15 +89,15 @@ export default function CartPage() {
                   <div className="flex-1 min-w-0">
                     <div className="mb-2 flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-[11px] font-semibold text-[#E63022] uppercase tracking-[0.04em] mb-1">{item.product.category}</p>
-                        <Link href={`/products/${item.product.id}`}>
+                        <p className="text-[11px] font-semibold text-[#E63022] uppercase tracking-[0.04em] mb-1">{item.category ?? 'Item'}</p>
+                        <Link href={`/products/${item.productId}`}>
                           <h3 className="truncate text-sm font-semibold tracking-[0.02em] text-white transition-colors hover:text-[#E63022]">
-                            {item.product.name}
+                            {item.name}
                           </h3>
                         </Link>
                       </div>
                       <button
-                        onClick={() => removeItem(item.product.id)}
+                        onClick={() => removeItem(item.id)}
                         className="shrink-0 p-2 rounded-full text-white/25 hover:text-[#E63022] hover:bg-[#E63022]/10 transition-all"
                         aria-label="Remove"
                       >
@@ -109,14 +109,14 @@ export default function CartPage() {
                       {/* Quantity */}
                       <div className="flex items-center border border-white/10 rounded-full overflow-hidden">
                         <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                          onClick={() => updateItem(item.id, item.quantity - 1)}
                           className="w-9 h-9 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/5 transition-all"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
                         <span className="w-9 text-center text-sm text-white font-semibold">{item.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                          onClick={() => updateItem(item.id, item.quantity + 1)}
                           className="w-9 h-9 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/5 transition-all"
                         >
                           <Plus className="w-3 h-3" />
@@ -125,9 +125,9 @@ export default function CartPage() {
 
                       {/* Price */}
                       <div className="text-right">
-                        <p className="text-base font-semibold text-white">{formatPrice(item.product.price * item.quantity)}</p>
+                        <p className="text-base font-semibold text-white">{formatPrice(item.price * item.quantity)}</p>
                         {item.quantity > 1 && (
-                          <p className="text-xs text-white/25 font-medium">{formatPrice(item.product.price)} each</p>
+                          <p className="text-xs text-white/25 font-medium">{formatPrice(item.price)} each</p>
                         )}
                       </div>
                     </div>

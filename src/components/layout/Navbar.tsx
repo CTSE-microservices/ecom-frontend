@@ -166,7 +166,7 @@ export default function Navbar() {
                     className="flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors hover:bg-white/8"
                   >
                     <div className="w-7 h-7 rounded-full bg-[#E63022] flex items-center justify-center text-white text-xs font-semibold tracking-wide">
-                      {user.name.charAt(0)}
+                      {(user.username ?? user.email).charAt(0).toUpperCase()}
                     </div>
                     <ChevronDown className={`w-3 h-3 text-white/40 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
                   </button>
@@ -180,7 +180,7 @@ export default function Navbar() {
                         className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-[#2a2a2a] bg-[#0f0f10] py-1 shadow-2xl"
                       >
                         <div className="border-b border-white/10 px-4 py-3">
-                          <p className="truncate text-xs font-bold text-white">{user.name}</p>
+                          <p className="truncate text-xs font-bold text-white">{user.username ?? user.email}</p>
                           <p className="truncate text-[11px] text-white/45">{user.email}</p>
                         </div>
                         <button
@@ -291,10 +291,10 @@ export default function Navbar() {
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-full bg-[#E63022] flex items-center justify-center text-white font-semibold text-lg">
-                        {user.name.charAt(0)}
+                        {(user.username ?? user.email).charAt(0).toUpperCase()}
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-white">{user.name}</p>
+                        <p className="text-sm font-bold text-white">{user.username ?? user.email}</p>
                         <p className="text-xs text-white/40">{user.email}</p>
                       </div>
                     </div>
