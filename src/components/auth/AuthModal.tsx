@@ -96,7 +96,7 @@ function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 }
 
 function SignupForm({ onSuccess }: { onSuccess: () => void }) {
-  const { signup } = useAuth();
+  const { register: registerUser } = useAuth();
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState('');
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignupForm>({
@@ -106,7 +106,11 @@ function SignupForm({ onSuccess }: { onSuccess: () => void }) {
   const onSubmit = async (data: SignupForm) => {
     try {
       setError('');
-      await signup(data.name, data.email, data.password);
+      await registerUser({
+        username: data.name,
+        email: data.email,
+        password: data.password,
+      });
       onSuccess();
     } catch {
       setError('Something went wrong. Please try again.');

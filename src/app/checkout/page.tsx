@@ -150,12 +150,12 @@ function ReviewStep({ shipping, onBack, onComplete }: { shipping: { name: string
 
       <div className="space-y-2.5">
         {items.map((item) => (
-          <div key={item.product.id} className="panel flex items-center justify-between p-3.5">
+          <div key={item.id} className="panel flex items-center justify-between p-3.5">
             <div className="flex items-center gap-3">
               <span className="text-sm font-medium text-white/45">{item.quantity}x</span>
-              <span className="max-w-[220px] truncate text-sm text-white">{item.product.name}</span>
+              <span className="max-w-[220px] truncate text-sm text-white">{item.name}</span>
             </div>
-            <span className="shrink-0 text-sm font-semibold text-white">{formatPrice(item.product.price * item.quantity)}</span>
+            <span className="shrink-0 text-sm font-semibold text-white">{formatPrice(item.price * item.quantity)}</span>
           </div>
         ))}
       </div>
@@ -238,7 +238,7 @@ export default function CheckoutPage() {
             <Check className="h-10 w-10 text-white" />
           </motion.div>
           <h1 className="section-title text-5xl">Order Placed</h1>
-          <p className="mt-3 text-sm text-white/50">Thank you for your purchase, {user.name.split(' ')[0]}.</p>
+          <p className="mt-3 text-sm text-white/50">Thank you for your purchase, {(user.username ?? user.email).split(' ')[0]}.</p>
           <p className="mt-1 text-xs text-white/40">A confirmation email will be sent to {user.email}</p>
           <Link href="/products" className="btn-primary mt-7 px-8 py-3.5">
             Continue Shopping
@@ -257,7 +257,7 @@ export default function CheckoutPage() {
             Back To Cart
           </Link>
           <h1 className="section-title mt-3 text-5xl">Checkout</h1>
-          <p className="mt-1 text-sm text-white/45">Logged in as {user.name}</p>
+          <p className="mt-1 text-sm text-white/45">Logged in as {user.username ?? user.email}</p>
         </div>
 
         <StepIndicator current={step} />
