@@ -5,7 +5,6 @@ import {
   useEffect, useCallback, ReactNode,
 } from 'react';
 import { api } from '@/lib/apiClient';
-import { getProductById } from '@/lib/data';
 import { useAuth } from './AuthContext';
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -81,16 +80,13 @@ interface ServerCartItem {
   quantity: number;
 }
 
-function toCartItem(raw: ServerCartItem, image?: string): CartItem {
-  const localProduct = getProductById(raw.product_id);
+function toCartItem(raw: ServerCartItem): CartItem {
   return {
     id: String(raw.id),
     productId: raw.product_id,
     name: raw.product_name,
     price: Number(raw.unit_price),
     quantity: raw.quantity,
-    image: image ?? localProduct?.image,
-    category: localProduct?.category,
   };
 }
 
@@ -122,8 +118,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!token) return;
     dispatch({ type: 'SET_LOADING', payload: true });
     try {
-      const data = await api.get<{ cart_item: ServerCartItem[] }>('order', '/api/cart');
-      const items = (data.cart_item ?? []).map((i) => toCartItem(i));
+      const res = await api.get<{ message: string; data: { cart_item: ServerCartItem[] } }>('order', '/api/cart');
+      const items = (res.data?.cart_item ?? []).map(toCartItem);
       dispatch({ type: 'SET_ITEMS', payload: items });
     } catch {
       dispatch({ type: 'SET_LOADING', payload: false });

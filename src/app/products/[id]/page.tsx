@@ -1,22 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, ShoppingBag, Heart, Minus, Plus, Check, Shield, Truck, RefreshCcw, Sparkles, Tag } from 'lucide-react';
+import { ShoppingBag, Heart, Minus, Plus, Check, Shield, Truck, RefreshCcw } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { getProductById, getRelatedProducts } from '@/lib/data';
+import { getProductById, getAllProducts, UIProduct } from '@/lib/productService';
 import { useCart } from '@/context/CartContext';
-import { formatPrice, discountPercent } from '@/lib/utils';
+import { formatPrice } from '@/lib/utils';
 import ProductCard from '@/components/products/ProductCard';
+import { useAuth } from '@/context/AuthContext';
 
-const tabs = ['Description', 'Specifications', 'Reviews'];
+const tabs = ['Description', 'Reviews'];
 
 const guarantees = [
   { icon: Shield,     label: 'Secure Payment' },
@@ -24,10 +25,37 @@ const guarantees = [
   { icon: RefreshCcw, label: '30-day Return' },
 ];
 
+function getChannelId(channel: string): number {
+  return channel === 'WHOLESALE' ? 2 : 1;
+}
+
 export default function ProductDetailPage() {
   const params = useParams();
-  const id = params?.id as string;
-  const product = getProductById(id);
+  const rawId = params?.id as string;
+  const { user } = useAuth();
+  const channelId = user ? getChannelId(user.channel) : 1;
+
+  const [product, setProduct] = useState<UIProduct | null>(null);
+  const [related, setRelated] = useState<UIProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+
+  useEffect(() => {
+    const id = Number(rawId);
+    if (isNaN(id)) { setNotFound(true); setIsLoading(false); return; }
+    setIsLoading(true);
+    getProductById(id, channelId)
+      .then((p) => {
+        setProduct(p);
+        // Fetch related: same category, excluding this product
+        return getAllProducts(channelId).then((all) =>
+          setRelated(all.filter((x) => x.category === p.category && x.id !== p.id).slice(0, 6))
+        );
+      })
+      .catch(() => setNotFound(true))
+      .finally(() => setIsLoading(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rawId]);
 
   const { addItem } = useCart();
   const [quantity, setQuantity]     = useState(1);
@@ -36,23 +64,24 @@ export default function ProductDetailPage() {
   const [added, setAdded]           = useState(false);
   const [liked, setLiked]           = useState(false);
 
-  if (!product) {
+  if (isLoading) {
+    return (
+      <div className="page-shell flex min-h-screen items-center justify-center">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+      </div>
+    );
+  }
+
+  if (notFound || !product) {
     return (
       <div className="min-h-screen bg-black pt-32 flex flex-col items-center justify-center text-center px-6">
         <p className="font-bebas text-8xl text-white/10 tracking-widest mb-4">404</p>
         <h1 className="font-bebas text-3xl text-white tracking-[0.02em] mb-2">Product not found</h1>
         <p className="text-white/40 text-sm mb-8">The product you&apos;re looking for doesn&apos;t exist.</p>
-        <Link
-          href="/products"
-          className="btn-primary px-8 py-3.5"
-        >
-          Browse Products
-        </Link>
+        <Link href="/products" className="btn-primary px-8 py-3.5">Browse Products</Link>
       </div>
     );
   }
-
-  const related = getRelatedProducts(product);
 
   const handleAddToCart = () => {
     addItem({
@@ -68,7 +97,7 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="page-shell">
+    <div className="page-shell pb-20">
 
       {/* ─── Breadcrumb ──────────────────────── */}
       <div className="border-b border-white/8">
@@ -77,8 +106,14 @@ export default function ProductDetailPage() {
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <span>/</span>
             <Link href="/products" className="hover:text-white transition-colors">Products</Link>
-            <span>/</span>
-            <span className="capitalize text-white/50">{product.category}</span>
+            {product.category && (
+              <>
+                <span>/</span>
+                <Link href={`/products?category=${product.category}`} className="hover:text-white transition-colors capitalize">
+                  {product.category}
+                </Link>
+              </>
+            )}
             <span>/</span>
             <span className="text-white/60 truncate max-w-[160px]">{product.name}</span>
           </div>
@@ -90,49 +125,34 @@ export default function ProductDetailPage() {
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2 lg:gap-14">
 
           {/* Left: Images */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.45 }}
-          >
-            {/* Main image */}
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.45 }}>
             <div className="relative mb-4 aspect-square overflow-hidden rounded-[4px] border border-white/10 bg-[#111]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeImage}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="absolute inset-0"
-                >
-                  <Image
-                    src={product.images[activeImage]}
-                    alt={product.name}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Badges */}
-              <div className="absolute top-4 left-4 flex gap-2 z-10">
-                {product.isNew && (
-                  <span className="flex items-center gap-1 rounded-full bg-black/80 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-white font-mono">
-                    <Sparkles className="w-3 h-3" />New
-                  </span>
-                )}
-                {product.isSale && product.originalPrice && (
-                  <span className="flex items-center gap-1 rounded-full bg-[#E63022] px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-white font-mono">
-                    <Tag className="w-3 h-3" />
-                    -{discountPercent(product.originalPrice, product.price)}%
-                  </span>
-                )}
-              </div>
+              {product.images.length > 0 ? (
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeImage}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="absolute inset-0"
+                  >
+                    <Image
+                      src={product.images[activeImage]}
+                      alt={product.name}
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <ShoppingBag className="w-16 h-16 text-white/10" />
+                </div>
+              )}
             </div>
 
-            {/* Thumbnails */}
             {product.images.length > 1 && (
               <div className="flex gap-3">
                 {product.images.map((img, i) => (
@@ -155,45 +175,25 @@ export default function ProductDetailPage() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.45 }}
-            className="space-y-6 lg:pl-2"
+            className="space-y-6 lg:pl-8"
           >
             {/* Category + title */}
             <div>
-              <p className="label mb-2">{product.category}</p>
+              {product.category && <p className="label mb-2 capitalize">{product.category}</p>}
               <h1 className="font-bebas text-4xl leading-[1.02] tracking-[0.02em] text-white lg:text-5xl">
                 {product.name}
               </h1>
             </div>
 
-            {/* Rating */}
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-4 h-4 ${i < Math.round(product.rating) ? 'fill-[#E63022] stroke-[#E63022]' : 'stroke-white/20 fill-transparent'}`}
-                  />
-                ))}
-              </div>
-              <span className="text-sm font-semibold text-white">{product.rating}</span>
-              <span className="text-sm text-white/35">({product.reviews.toLocaleString()} reviews)</span>
-            </div>
-
             {/* Price */}
             <div className="flex items-center gap-4 border-y border-white/8 py-4">
               <span className="font-bebas text-4xl text-white tracking-[0.02em]">{formatPrice(product.price)}</span>
-              {product.originalPrice && (
-                <span className="text-xl text-white/30 line-through">{formatPrice(product.originalPrice)}</span>
-              )}
-              {product.originalPrice && (
-                <span className="px-3 py-1 rounded-full bg-[#E63022]/15 text-[#E63022] text-xs font-semibold uppercase tracking-[0.04em] border border-[#E63022]/25">
-                  Save {formatPrice(product.originalPrice - product.price)}
-                </span>
-              )}
             </div>
 
             {/* Description */}
-            <p className="text-sm leading-relaxed text-white/60">{product.description}</p>
+            {product.description && (
+              <p className="text-sm leading-relaxed text-white/60">{product.description}</p>
+            )}
 
             {/* Quantity */}
             <div>
@@ -214,7 +214,11 @@ export default function ProductDetailPage() {
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
-                <span className="text-xs text-white/30 font-medium">{product.stock} in stock</span>
+                {product.stock > 0 ? (
+                  <span className="text-xs text-white/30 font-medium">{product.stock} in stock</span>
+                ) : (
+                  <span className="text-xs text-[#E63022] font-medium">Out of stock</span>
+                )}
               </div>
             </div>
 
@@ -223,7 +227,8 @@ export default function ProductDetailPage() {
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={handleAddToCart}
-                className={`btn-primary flex-1 justify-center py-3.5 ${
+                disabled={product.stock === 0}
+                className={`btn-primary flex-1 justify-center py-3.5 disabled:cursor-not-allowed disabled:opacity-50 ${
                   added ? 'bg-white text-black border-white' : ''
                 }`}
               >
@@ -243,10 +248,7 @@ export default function ProductDetailPage() {
               </button>
             </div>
 
-            <Link
-              href="/checkout"
-              className="btn-secondary block py-3.5 text-center"
-            >
+            <Link href="/checkout" className="btn-secondary w-full justify-center py-3.5">
               Buy Now — Checkout
             </Link>
 
@@ -263,7 +265,7 @@ export default function ProductDetailPage() {
         </div>
 
         {/* ─── Tabs ──────────────────────────── */}
-        <div className="mt-20 mb-16">
+        <div className="mt-12 mb-12">
           <div className="flex gap-0 border-b border-white/10 mb-10">
             {tabs.map((tab) => (
               <button
@@ -290,28 +292,7 @@ export default function ProductDetailPage() {
             >
               {activeTab === 'Description' && (
                 <div className="max-w-2xl">
-                  <p className="text-white/50 leading-relaxed">{product.description}</p>
-                  <ul className="mt-6 space-y-3">
-                    {['Premium quality materials', 'Carefully crafted for longevity', 'Backed by our quality guarantee', '30-day hassle-free returns'].map((item) => (
-                      <li key={item} className="flex items-center gap-3 text-sm text-white/50">
-                        <span className="w-5 h-5 rounded-full bg-[#E63022]/15 border border-[#E63022]/30 flex items-center justify-center shrink-0">
-                          <Check className="w-3 h-3 text-[#E63022]" />
-                        </span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {activeTab === 'Specifications' && product.specs && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
-                  {Object.entries(product.specs).map(([key, val]) => (
-                    <div key={key} className="panel flex items-center justify-between p-4">
-                      <span className="text-sm text-white/35 font-medium">{key}</span>
-                      <span className="text-sm text-white font-bold">{val}</span>
-                    </div>
-                  ))}
+                  <p className="text-white/50 leading-relaxed">{product.description || 'No description available.'}</p>
                 </div>
               )}
 
@@ -324,26 +305,22 @@ export default function ProductDetailPage() {
                   ].map((review, i) => {
                     const avatarBg = i === 0 ? 'bg-[#E63022]' : i === 1 ? 'bg-white/[0.12] border border-white/15' : 'bg-[#E63022]/55';
                     return (
-                    <div key={i} className="panel p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-10 h-10 rounded-full ${avatarBg} flex items-center justify-center text-white text-sm font-semibold text-lg`}>
-                            {review.name[0]}
-                          </div>
-                          <div>
-                            <p className="text-sm font-semibold text-white">{review.name}</p>
-                            <div className="flex items-center gap-0.5 mt-0.5">
-                              {[...Array(5)].map((_, j) => (
-                                <Star key={j} className={`w-3 h-3 ${j < review.rating ? 'fill-[#E63022] stroke-[#E63022]' : 'stroke-white/20 fill-transparent'}`} />
-                              ))}
+                      <div key={i} className="panel p-6">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-10 h-10 rounded-full ${avatarBg} flex items-center justify-center text-white text-sm font-semibold text-lg`}>
+                              {review.name[0]}
+                            </div>
+                            <div>
+                              <p className="text-sm font-semibold text-white">{review.name}</p>
                             </div>
                           </div>
+                          <span className="text-xs text-white/25 font-medium">{review.date}</span>
                         </div>
-                        <span className="text-xs text-white/25 font-medium">{review.date}</span>
+                        <p className="text-sm text-white/45 leading-relaxed">{review.text}</p>
                       </div>
-                      <p className="text-sm text-white/45 leading-relaxed">{review.text}</p>
-                    </div>
-                  )})}
+                    );
+                  })}
                 </div>
               )}
             </motion.div>

@@ -9,12 +9,14 @@ import { api } from '@/lib/apiClient';
 const TOKEN_KEY = 'auth_token';
 
 export interface AuthUser {
-  id: string;
+  id: number;
   username: string | null;
   email: string;
   phoneNumber: string | null;
-  role: { id: number; roleName: string };
-  channel: { id: number; channelName: string };
+  /** e.g. "CUSTOMER", "ADMIN", "VENDOR" */
+  role: string;
+  /** e.g. "RETAIL", "WHOLESALE" */
+  channel: string;
   isActive: boolean;
 }
 
@@ -53,8 +55,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const verifyToken = useCallback(async (jwt: string) => {
     try {
-      const me = await api.get<AuthUser>('user', '/api/auth/verify');
-      setUser(me);
+      const res = await api.get<{ success: boolean; data: AuthUser }>('user', '/api/v1/auth/verify');
+      setUser(res.data);
       setToken(jwt);
     } catch {
       logout();
@@ -74,11 +76,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = useCallback(async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      const data = await api.post<{ token: string }>('user', '/api/auth/login', {
+      const res = await api.post<{ success: boolean; data: { token: string } }>('user', '/api/v1/auth/login', {
         email,
         password,
       });
-      const jwt = data.token;
+      const jwt = res.data.token;
       localStorage.setItem(TOKEN_KEY, jwt);
       await verifyToken(jwt);
     } finally {
@@ -89,7 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = useCallback(async (data: RegisterData) => {
     setIsLoading(true);
     try {
-      await api.post('user', '/api/users/register', {
+      await api.post('user', '/api/v1/users/register', {
         ...data,
         roleId: data.roleId ?? 2,
         userChannelId: data.userChannelId ?? 1,

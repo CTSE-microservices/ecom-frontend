@@ -81,7 +81,13 @@ export default function CartPage() {
                   {/* Image */}
                   <Link href={`/products/${item.productId}`} className="shrink-0">
                     <div className="relative w-24 h-24 rounded-xl overflow-hidden bg-[#111]">
-                      <Image src={item.image ?? '/file.svg'} alt={item.name} fill className="object-cover" />
+                      {item.image ? (
+                        <Image src={item.image} alt={item.name} fill className="object-cover" />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <ShoppingBag className="w-8 h-8 text-white/15" />
+                        </div>
+                      )}
                     </div>
                   </Link>
 

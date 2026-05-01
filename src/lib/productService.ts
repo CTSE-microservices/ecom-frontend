@@ -20,17 +20,53 @@ export interface Product {
   categories?: Category;
   product_images: ProductImage[];
   /** Price from the user's channel price book — injected by product service */
-  price?: number;
+  price?: string;
 }
 
-export async function getAllProducts(channelId?: number): Promise<Product[]> {
-  const query = channelId ? `?channelId=${channelId}` : '';
-  return api.get<Product[]>('product', `/api/products${query}`);
+/** Normalised shape used throughout the UI */
+export interface UIProduct {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  images: string[];
+  /** Lowercase category name, e.g. "electronics" */
+  category: string;
+  stock: number;
+  originalPrice?: number;
+  isNew?: boolean;
+  isBestSeller?: boolean;
+  isSale?: boolean;
+  rating?: number;
+  reviews?: number;
+  specs?: Record<string, string>;
 }
 
-export async function getProductById(id: number, channelId?: number): Promise<Product> {
-  const query = channelId ? `?channelId=${channelId}` : '';
-  return api.get<Product>('product', `/api/products/${id}${query}`);
+export function adaptProduct(p: Product): UIProduct {
+  const images = (p.product_images ?? []).map((i) => i.image_url);
+  return {
+    id: String(p.product_id),
+    name: p.name,
+    description: p.description ?? '',
+    price: p.price != null ? Number(p.price) : 0,
+    image: images[0] ?? '',
+    images: images.length ? images : [],
+    category: p.categories?.category_name?.toLowerCase() ?? '',
+    stock: p.stock_quantity,
+  };
+}
+
+export async function getAllProducts(channelId?: number): Promise<UIProduct[]> {
+  const query = channelId ? `?channel_id=${channelId}` : '';
+  const raw = await api.get<Product[]>('product', `/api/products${query}`);
+  return raw.map(adaptProduct);
+}
+
+export async function getProductById(id: number, channelId?: number): Promise<UIProduct> {
+  const query = channelId ? `?channel_id=${channelId}` : '';
+  const raw = await api.get<Product>('product', `/api/products/${id}${query}`);
+  return adaptProduct(raw);
 }
 
 export async function getProductStock(id: number): Promise<{ stock_quantity: number }> {
