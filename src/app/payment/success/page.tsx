@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -9,6 +9,14 @@ import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 
 export default function PaymentSuccessPage() {
+  return (
+    <Suspense>
+      <PaymentSuccessContent />
+    </Suspense>
+  );
+}
+
+function PaymentSuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const { clearCart } = useCart();
