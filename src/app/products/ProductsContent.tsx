@@ -34,15 +34,20 @@ export default function ProductsContent() {
   const [sortBy, setSortBy] = useState('featured');
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  useEffect(() => {
+  const loadProducts = React.useCallback(async () => {
+    const channelId = user ? getChannelId(user.channel) : 1;
     setIsLoading(true);
     setError(false);
-    const channelId = user ? getChannelId(user.channel) : 1;
-    getAllProducts(channelId)
-      .then(setProducts)
-      .catch(() => setError(true))
-      .finally(() => setIsLoading(false));
+    try {
+      setProducts(await getAllProducts(channelId));
+    } catch {
+      setError(true);
+    } finally {
+      setIsLoading(false);
+    }
   }, [user]);
+
+  useEffect(() => { void loadProducts(); }, [loadProducts]);
 
   const categories = useMemo(() => {
     const seen = new Set<string>();
@@ -251,12 +256,7 @@ export default function ProductsContent() {
                 <p className="font-bebas text-4xl text-white/20 tracking-widest mb-4">FAILED TO LOAD</p>
                 <p className="text-sm text-white/30 mb-8 font-medium">Something went wrong. Please try again.</p>
                 <button
-                  onClick={() => {
-                    setError(false);
-                    setIsLoading(true);
-                    const channelId = user ? getChannelId(user.channel) : 1;
-                    getAllProducts(channelId).then(setProducts).catch(() => setError(true)).finally(() => setIsLoading(false));
-                  }}
+                  onClick={() => void loadProducts()}
                   className="btn-primary px-7 py-3"
                 >
                   Retry
