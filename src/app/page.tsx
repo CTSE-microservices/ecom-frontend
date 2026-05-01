@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,7 +10,9 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import ProductCard from '@/components/products/ProductCard';
-import { categories, getFeaturedProducts, getNewArrivals } from '@/lib/data';
+import { getAllProducts, UIProduct } from '@/lib/productService';
+import { CATEGORIES } from '@/lib/categories';
+import { useAuth } from '@/context/AuthContext';
 
 /* ─── Static data ─────────────────────────────────────────────── */
 const heroSlides = [
@@ -68,11 +70,24 @@ const stagger = {
 };
 
 /* ─── Component ───────────────────────────────────────────────── */
+function getChannelId(channel: string): number {
+  return channel === 'WHOLESALE' ? 2 : 1;
+}
+
 export default function HomePage() {
-  const featured   = getFeaturedProducts();
-  const newArrivals= getNewArrivals();
-  const [activeTab, setActiveTab] = useState<'bestsellers' | 'new'>('bestsellers');
-  const tabProducts = activeTab === 'bestsellers' ? featured : newArrivals;
+  const { user } = useAuth();
+  const [products, setProducts] = useState<UIProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'featured' | 'new'>('featured');
+
+  useEffect(() => {
+    const channelId = user ? getChannelId(user.channel) : 1;
+    getAllProducts(channelId).then(setProducts).catch(() => {}).finally(() => setIsLoading(false));
+  }, [user]);
+
+  const featuredProducts = products.slice(0, 8);
+  const newProducts = [...products].sort((a, b) => Number(b.id) - Number(a.id)).slice(0, 8);
+  const tabProducts = activeTab === 'new' ? newProducts : featuredProducts;
 
   return (
     <>
@@ -90,7 +105,6 @@ export default function HomePage() {
           {heroSlides.map((slide, i) => (
             <SwiperSlide key={i}>
               <div className="relative h-full flex items-end pb-20 lg:items-center lg:pb-0">
-                {/* Background */}
                 <div className="absolute inset-0">
                   <Image
                     src={slide.image}
@@ -102,8 +116,6 @@ export default function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                 </div>
-
-                {/* Content */}
                 <div className="container-shell relative z-10 w-full">
                   <div className="max-w-xl">
                     <motion.p
@@ -138,17 +150,11 @@ export default function HomePage() {
                       transition={{ duration: 0.5, delay: 0.45 }}
                       className="flex items-center gap-4"
                     >
-                      <Link
-                        href={slide.href}
-                        className="btn-primary group px-8 py-4"
-                      >
+                      <Link href={slide.href} className="btn-primary group px-8 py-4">
                         {slide.cta}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
-                      <Link
-                        href="/about"
-                        className="text-sm font-semibold text-white/50 hover:text-white tracking-[0.02em] transition-colors"
-                      >
+                      <Link href="/about" className="text-sm font-semibold text-white/50 hover:text-white tracking-[0.02em] transition-colors">
                         Our Story →
                       </Link>
                     </motion.div>
@@ -196,18 +202,14 @@ export default function HomePage() {
               <h2 className="font-bebas text-5xl lg:text-6xl text-white tracking-[0.02em]">Shop by category</h2>
             </motion.div>
             <motion.div variants={fadeUp}>
-              <Link
-                href="/products"
-                className="hidden sm:flex items-center gap-2 text-sm font-semibold text-white/40 hover:text-white tracking-[0.02em] transition-colors"
-              >
+              <Link href="/products" className="hidden sm:flex items-center gap-2 text-sm font-semibold text-white/40 hover:text-white tracking-[0.02em] transition-colors">
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
           </motion.div>
 
-          {/* Category grid — first 2 large, rest 3 small */}
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-12 lg:gap-4">
-            {categories.map((cat, i) => (
+            {CATEGORIES.map((cat, i) => (
               <motion.div
                 key={cat.id}
                 initial={{ opacity: 0, y: 24 }}
@@ -230,8 +232,6 @@ export default function HomePage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10" />
                     <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
-
-                    {/* Label */}
                     <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5">
                       <div className="inline-flex rounded-full border border-white/20 bg-black/60 px-3 py-1.5 backdrop-blur-sm">
                         <p className="font-bebas text-2xl leading-none tracking-[0.04em] text-white">{cat.name}</p>
@@ -250,7 +250,7 @@ export default function HomePage() {
       </section>
 
       {/* ════════════════════════════════════════
-          FEATURED DROPS — full-width swiper
+          FEATURED DROPS
       ════════════════════════════════════════ */}
       <section className="section-shell bg-[#0a0a0a]">
         <div className="container-shell">
@@ -259,47 +259,49 @@ export default function HomePage() {
               <p className="label mb-2">Handpicked</p>
               <h2 className="font-bebas text-5xl lg:text-6xl text-white tracking-[0.02em]">Featured drops</h2>
             </div>
-            <Link
-              href="/products"
-              className="hidden sm:flex items-center gap-2 text-sm font-semibold text-white/40 hover:text-white tracking-[0.02em] transition-colors"
-            >
+            <Link href="/products" className="hidden sm:flex items-center gap-2 text-sm font-semibold text-white/40 hover:text-white tracking-[0.02em] transition-colors">
               All Products <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
-          <Swiper
-            modules={[Pagination]}
-            pagination={{ clickable: true }}
-            spaceBetween={16}
-            slidesPerView={1.2}
-            breakpoints={{
-              480:  { slidesPerView: 2.2 },
-              768:  { slidesPerView: 3.2 },
-              1024: { slidesPerView: 4.2 },
-              1280: { slidesPerView: 5 },
-            }}
-            className="pb-12 -mx-6 px-6 lg:-mx-10 lg:px-10"
-          >
-            {featured.map((product, i) => (
-              <SwiperSlide key={product.id}>
-                <ProductCard product={product} index={i} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {isLoading ? (
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="aspect-[3/4] animate-pulse rounded-[4px] bg-white/5" />
+              ))}
+            </div>
+          ) : (
+            <Swiper
+              modules={[Pagination]}
+              pagination={{ clickable: true }}
+              spaceBetween={16}
+              slidesPerView={1.2}
+              breakpoints={{
+                480:  { slidesPerView: 2.2 },
+                768:  { slidesPerView: 3.2 },
+                1024: { slidesPerView: 4.2 },
+                1280: { slidesPerView: 5 },
+              }}
+              className="pb-12 -mx-6 px-6 lg:-mx-10 lg:px-10"
+            >
+              {products.slice(0, 10).map((product, i) => (
+                <SwiperSlide key={product.id}>
+                  <ProductCard product={product} index={i} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
         </div>
       </section>
 
       {/* ════════════════════════════════════════
-          PROMO BANNER — editorial full-bleed
+          PROMO BANNER
       ════════════════════════════════════════ */}
       <section className="relative overflow-hidden bg-[#0a0a0a] py-24 lg:py-28 border-y border-[#1a1a1a]">
-        {/* Decorative large type watermark */}
         <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none">
           <span className="font-bebas text-[clamp(8rem,20vw,18rem)] text-white/6 tracking-[0.1em] whitespace-nowrap">Sale</span>
         </div>
-
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(230,48,34,0.18),transparent_45%)]" />
-
         <div className="container-shell relative flex flex-col items-center justify-between gap-10 lg:flex-row">
           <div>
             <p className="label text-white/70 mb-3">Limited Time Offer</p>
@@ -310,61 +312,60 @@ export default function HomePage() {
               Massive savings across all categories. Don&apos;t miss out on our biggest sale of the season.
             </p>
           </div>
-          <Link
-            href="/products?sale=true"
-            className="group btn-primary shrink-0 px-10 py-5"
-          >
-            Shop the Sale
+          <Link href="/products" className="group btn-primary shrink-0 px-10 py-5">
+            Shop Now
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       </section>
 
       {/* ════════════════════════════════════════
-          COLLECTION TABS — Best Sellers / New
+          COLLECTION TABS
       ════════════════════════════════════════ */}
       <section className="section-shell bg-black">
         <div className="container-shell">
-          {/* Header + Tabs */}
           <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-5 mb-12">
             <div>
               <p className="label mb-2">Discover</p>
               <h2 className="font-bebas text-5xl lg:text-6xl text-white tracking-[0.02em]">Our collection</h2>
             </div>
             <div className="flex items-center gap-1 border border-white/15 rounded-full p-1">
-              {(['bestsellers', 'new'] as const).map((t) => (
+              {(['featured', 'new'] as const).map((t) => (
                 <button
                   key={t}
                   onClick={() => setActiveTab(t)}
                   className={`rounded-full px-5 py-2.5 text-[12px] font-semibold tracking-[0.02em] transition-all duration-200 ${
-                    activeTab === t
-                      ? 'bg-white text-black'
-                      : 'text-white/50 hover:text-white'
+                    activeTab === t ? 'bg-white text-black' : 'text-white/50 hover:text-white'
                   }`}
                 >
-                  {t === 'bestsellers' ? 'Best Sellers' : 'New Arrivals'}
+                  {t === 'featured' ? 'Featured' : 'New Arrivals'}
                 </button>
               ))}
             </div>
           </div>
 
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5"
-          >
-            {tabProducts.slice(0, 8).map((product, i) => (
-              <ProductCard key={product.id} product={product} index={i} />
-            ))}
-          </motion.div>
+          {isLoading ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="aspect-[3/4] animate-pulse rounded-[4px] bg-white/5" />
+              ))}
+            </div>
+          ) : (
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5"
+            >
+              {tabProducts.map((product, i) => (
+                <ProductCard key={product.id} product={product} index={i} />
+              ))}
+            </motion.div>
+          )}
 
           <div className="text-center mt-12">
-            <Link
-              href="/products"
-              className="btn-secondary group px-10 py-4"
-            >
+            <Link href="/products" className="btn-secondary group px-10 py-4">
               View All Products
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -402,7 +403,7 @@ export default function HomePage() {
       </section>
 
       {/* ════════════════════════════════════════
-          NEWSLETTER — full width strip
+          NEWSLETTER
       ════════════════════════════════════════ */}
       <section className="border-t border-[#1a1a1a] bg-[#0a0a0a] py-20">
         <div className="container-shell">
@@ -420,7 +421,6 @@ export default function HomePage() {
   );
 }
 
-/* ─── Newsletter inline component ────────────────────────────── */
 function NewsletterForm() {
   const [email, setEmail] = React.useState('');
   const [submitted, setSubmitted] = React.useState(false);
@@ -456,10 +456,7 @@ function NewsletterForm() {
         required
         className="input-field flex-1 py-4"
       />
-      <button
-        type="submit"
-        className="btn-primary px-7 py-4 sm:min-w-[160px]"
-      >
+      <button type="submit" className="btn-primary px-7 py-4 sm:min-w-[160px]">
         Subscribe →
       </button>
     </form>
